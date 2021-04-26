@@ -1,1 +1,32 @@
-# INFO478-Project-Group4
+# INFO478 Project - Group4: The Levels of Mental Health Intervention
+
+## Project Description
+### Purpose
+The purpose of this project is to analyze mental health through three different aspects of life: nutrition, work-life, and the type of toll mental health takes on a national level. There are lots of factors that can play into someone’s mental health state, but things like nutrition and work lifestyles are areas that major figures in national and global institutions can influence. Studying mental health is complicated, and looking at a singular frame of context would not allow for a comprehensive understanding of the problems that exist and how to address them. That is why this project will look at suicide rates to track the severity of mental health issues across nations and rely on data like nutrition or work-life stress to understand how there might be gaps for treating mental health and investigate what interventions could be recommended.
+
+### Other Research
+In 2016, [The Luv U Project](https://oce-ovid-com.offcampus.lib.washington.edu/article/00043764-201804000-00005/HTML) held a summit to discuss mental health in the workplace and to form recommendations for action at individual, organizational, and policy levels. The goal of any resulting projects was to create a supportive environment that allows employees to feel like they are doing meaningful work while feeling their best. There were four ideas that were discussed at the end. The first was a mental health in the workplace how-to guide that would provide employers with information on best practices and assessment tools to gauge the effectiveness of their programs. The second was a scorecard that would allow employers to check their progress in creating a supportive environment for mental health. The third was to have a recognition program as an incentive to recognize businesses that have quality mental health programs with evidence based on hard data. The final proposal was to take an academic approach by partnering with business schools to create executive training programs focused on mental health. It would be around 3-5 days of coursework where a curriculum would be developed including looking at case studies like those looked at during this summit.
+
+The 2015 paper [Mental health services and public mental health: challenges and opportunities](https://onlinelibrary.wiley.com/doi/full/10.1002/wps.20184) suggests that greater interventions for mental health can take place at the policy level if there is an emphasis on the impact mental health can have on a nation’s economic capital. This is a somewhat similar recommendation to what was proposed to employers: giving those with the power to make these resources available an incentive and typically an economic one. The paper also looks at how strategies for mental health should be considered in health and non-health policies. The researchers also addressed the importance of formal community-based mental health services coupled with services in general hospitals and listed the advantages of community-based programs.
+
+When looking at the [relationship between diet and mental health in adolescents](https://search.proquest.com/docview/1564433274/3270D204FA254594PQ/4?accountid=14784) in 2014, researchers found consistent cross-sectional trends between poor diet and poor mental health. In contrast, the results were inconsistent when looking at the relationship between a good diet and a healthy mental state. There was a theory proposed in the discussion section that poor diet acts as a form of self-medication for those with internal depressive disorders. Other points were made regarding the role a lack of nutrients may play in one’s mental health state, but the researchers once again stated that there was not enough evidence for causality.
+
+### Datasets
+We will be working with a series of datasets. The first looks at one of the changes people can make on a personal level: [diet](https://www.kaggle.com/mariaren/covid19-healthy-diet-dataset}. This dataset is available on Kaggle and is compiled by user Maria Ren using data from the Food and Agriculture Organization of the United Nations, the Population Reference Bureau, and Johns Hopkins Center for Systems Science and Engineering CSSE.
+
+The second dataset is actually the results of an annual survey done by Open Sourcing Mental Illness Ltd called the OSMI Mental Health in Tech Survey and available on their [website](https://osmihelp.org/research). This survey aims to “measure attitudes towards mental health in the tech workplace, and examine the frequency of mental health disorders among tech workers”.
+
+Our final dataset looks at [mental health resources](https://www.kaggle.com/twinkle0705/mental-health-and-suicide-rates) on a global level and measures suicide rates by country, year, and sex. This dataset is compiled by user Twinkle Khanna on Kaggle using data from the World Health Organization.
+
+### Audience
+Our primary audience will be public health policymakers. We hope to discover important findings while analyzing these three datasets so that policymakers can better see the impacts of mental health and what measures can be taken to improve the situation. Ultimately, we want to bring more awareness about mental health to public health policymakers and stimulate them to make policies that can improve the greater health of the public.
+
+### Questions
+We hope our audience will learn how different areas (diet, workplace, facilities) impact people’s mental health and be able to provide more resources to areas with the biggest impact so people can improve their mental health. To do so, we hope to provide answers to the following questions: 
+
+One question we hope our project will answer is: What areas (diet, workplace, facilities) have the biggest impact on mental health?
+
+Another question we hope to answer using our datasets is: How certain changes (related to areas in datasets - diet, workplace, facilities) may correlate to mental health improvements?
+
+## Technical Description
+We will be creating this project via a compiled .Rmd file. Some of our datasets include missing and null values that we will have to deal with. Some other challenges we anticipate include deciding on the data visualization types to effectively communicate our data, making sure our questions are novel, and making sure our narrative is clear and ties together effectively. We also may need to review some tools and techniques that we have not used for a while.
