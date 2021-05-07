@@ -1,0 +1,26 @@
+---
+title: "Suicide Distribution Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+source("suicide_distribution_analysis.R")
+```
+
+# Distribution of Variables
+Looking at the age distribution in the `Age-standardized suicide rates.csv` file, we see that the median age-standardized suicide rates is `r age_summary$median` and the mean age-standardized suicide rates is `r age_summary$mean`. The median age-standardized rates is lower than the mean age-standardized rates by more than 2. This indicates that the age distribution is skewed to to the right, which is why the mean age-standardized rates is higher than the median. 
+The standard deviation is `r age_summary$sd`. The minimum age-standardized suicide rate is `r age_summary$min` and the maximum is `r age_summary$max`. There is a large difference between the minimum and maximum age-standardized suicide rates, with a difference of nearly 86. 
+
+Looking at the age-standardized suicide rates by year, we see that the median age-standardized suicide rates decreases each year, from `r year_summary$median[year_summary$year=="X2000"]` in 2000 to `r year_summary$median[year_summary$year=="X2016"]` in 2016. This is also the case for the mean, standard deviation, and maximum age-standardized suicide rates. 
+
+Looking at the age-standardized suicide rates by gender, we see that males and females have very different median, mean, standard deviation and maxes. For females, the median age-standardized suicide rate is `r sex_summary$median[sex_summary$Sex == 'Female']` while for males, it is `r sex_summary$median[sex_summary$Sex == 'Male']`. The median age-standardized suicide rates for males is more than double the rate for females. This is also the case for the mean, where the mean age-standardized suicide rate is `r sex_summary$mean[sex_summary$Sex == 'Female']` for females and `r sex_summary$mean[sex_summary$Sex == 'Male']` for males. The min for both genders is 0, but the max for females is `r sex_summary$max[sex_summary$Sex == 'Female']` and for males it is `r sex_summary$max[sex_summary$Sex == 'Male']`. The age-standardized suicide rates for males is more than double the age-standardized suicide rates for females.
+
+```{r, echo=FALSE}
+plot(mean_suicide_gender)
+```
+
+From the visualization above, we see that the mean age-standardized suicide rates for both genders went down each year from 2000 to 2016. The biggest decrease in the mean age-standardized suicide rates for both genders was in 2010, where the mean age-standardized suicide rates went from around 18 in 2000 to just above 15 in 2010. The most surprising insight is how different the mean age-standardized suicide rates is between males and females. Although the mean age-standardized suicide rates for both genders have decreased each year, the mean age-standardized suicide rates for males is much higher than females each year. I am surprised that the mean age-standardized suicide rates for males is so high. We can see that for males, the mean age-standardized suicide rates is nearly double the mean age-standardized suicide rates for females. The mean age-standardized suicide rates for females have been below 7 every year. 
