@@ -6,11 +6,6 @@ library(lintr)
 # load in data
 suicide_year <- read.csv("../data/national/Age-standardized suicide rates.csv",
                          stringsAsFactors = FALSE)
-suicide_crude <- read.csv("../data/national/Crude suicide rates.csv",
-                         stringsAsFactors = FALSE)
-facilities <- read.csv("../data/national/Facilities.csv", stringsAsFactors = FALSE)
-hr <- read.csv("../data/national/Human Resources.csv", stringsAsFactors = FALSE)
-
 
 suicide_year$Sex <- trimws(suicide_year$Sex, which = c("both"))
 
@@ -59,6 +54,6 @@ mean_suicide_gender <- ggplot(sex_year_mean, aes(x = year, y = mean,
   scale_x_discrete(labels = c("2000", "2010", "2015", "2016")) +
   scale_fill_manual(labels = c("Males", "Females", "Both Sexes"),
                     values = c("dodgerblue", "indianred1", "seagreen2")) +
-  labs(title = "Mean Age-Standardized Suicide Rates over time by Sex",
+  labs(title = "Global Mean Age-Standardized Suicide Rates over time by Sex",
        x = "Year",
        y = "Mean Age-Standardized Suicide Rates")
