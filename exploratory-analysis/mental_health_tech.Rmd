@@ -1,0 +1,32 @@
+---
+title: "Tech Relationship Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("dplyr")
+library("ggplot2")
+library("tidyr")
+source("mental_health_tech.R")
+```
+
+
+# Plot
+
+```{r, echo=FALSE}
+plot(work_help_heatmap)
+```
+
+
+# Analysis
+
+The variables in the heatmap above represent survey answer options to the following questions:
+
+- work_interfere: If you have a mental health condition, do you feel that it interferes with your work?
+- seek_help: Does your employer provide resources to learn more about mental health as part of an employee wellness program?
+
+It is not specified in the survey what their measure for a mental health condition is nor what is explicitly meant by "mental health as part of an employee wellness program," meaning respondents may have different approaches to this question. Many respondents indicated that sometimes their mental health condition does interfere with their work, suggesting having resources available by an employer to address these situations is necessary. However, a high number of respondents said that their employer did not provide resouces about mental health.
+
+Beyond the number of employees that use resources from wellness programs, a stigma is bound to exist for those that might seek out help if employers do not make the effort to make help widely known and available. The fact that many of the respondents that indicated mental health sometimes interferes with their work also answered a definitive "no" that mental health resources through programs were not available could suggest that they tried to seek help from their company to no avail. These types of answers leave lots of other questions to unpack such as what specific ways mental health affects the workplace, what types of resources would benefit employees in this position the most, and the type of toll this information implies on a national scale.
+
