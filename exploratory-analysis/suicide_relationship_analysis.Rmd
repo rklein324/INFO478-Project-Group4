@@ -1,0 +1,25 @@
+---
+title: "Suicide Relationship Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plotly)
+source("suicide_relationship_analysis.R")
+```
+
+# The Dataset
+These datasets includes suicide rates from 183 countries. It includes four individual datasets. The first is an age-standardized dataset with suicide rates from 2000, 2010, 2015, and 2016 for males, females, and both. This dataset is skewed right, meaning most of the suicide rates are lower, with a few outliers dragging the mean higher. It also shows that the mean suicide rate has been increasing.
+
+The second dataset includes the crude numbers by age group, starting at age 10, for just the year 2016. This dataset is also skewed right, and the mean suicide rate increases as age increases.
+
+Where it gets interesting is with the third and fourth datasets which have the number of mental health related facilities and human resources in each country per 100,000 population. There is some missing data in these datasets, so any variable with more than 20% of the data missing is not included.
+
+The plot below shows the relationship between suicide rates in different countries and their mental health facilities and human resources. You can select the resource and filter by sex to explore the data.
+
+```{r plot, warning=FALSE, echo=FALSE}
+suicide_relationship_plot
+```
+
+From the visualization above, we see that suicide rates are distributes across a right triangle, with the maximum suicide rate increasing as mental health resources decrease. Where a suicide rate is for a specific country below that line relies on a number of other factors including those discussed above, however the noticeable impact these resources have on a countries suicide rates makes it an important consideration for public policy decisions made around mental health.
