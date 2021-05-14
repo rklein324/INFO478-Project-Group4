@@ -1,5 +1,6 @@
 ---
-title: "Suicide Report"
+title: "Exploratory Analysis"
+author: "Group 4: Damita Gomez, Mei Zhen Li, Phung Phu, Rebecca Klein"
 output: html_document
 ---
 
@@ -13,17 +14,57 @@ library("ggplot2")
 library("tidyr")
 library("skimr")
 source("mental_health_tech.R")
-# source("diet.R")
+source("diet.R")
 source("suicide_distribution_analysis.R")
 source("suicide_relationship_analysis.R")
 ```
 
 <hr/>
 
+# Distribution of Variables
+<hr/>
 
-# Suicide Distribution Analysis
+### Distribution of Variables - Diet Distribution Analysis
+Can food trigger people's emotional and mental health? Absolutely. Many people are surprised that there is a close link between mental health disorders and nutritional deficiencies. The role of food is more prominent than people think! Bad eating and drinking habits can negatively impact people's thoughts and behaviors. Malnutrition can also lead to physical health problems, affecting people's feelings and way of thinking. Few people understand the close relationship between nutrition and mental health disorders such as depression and anxiety. Depression and anxiety are often regarded as mysterious diseases shrouded in shame. Depression is generally believed to be based on chemical imbalances or unstable emotions. However, surprisingly, nutrition often plays a significant role in the onset, duration, and intensity of depression. With that being said, the diet distribution analysis portion will compare and contrast the relationship between healthy diet patterns and mental health by observing obesity and a healthy diet.
 
-## Distribution of Variables
+<div class = "row">
+<div class = "col-md-6">
+```{r echo=FALSE}
+top_5_obes %>%
+  kbl(caption = "Top Five Countries with the Highest Obesity Percentage") %>%
+  kable_styling(
+    bootstrap_options = "striped",
+    full_width = F, position = "left"
+  )
+```
+</div>
+
+##### The Recommended Simple Daily Diet Intake by The USDA Center for Nutrition Policy and Promotion
+<div class = "col-md-6">
+```{r echo=FALSE}
+print(ideal_diet_plot)
+```
+</div>
+</div>
+
+Based on the data obtained from the Food and Agriculture Organization of the United Nations, the top five countries with the highest obesity rate are listed in the table (left). The plot on the right is a simple daily diet guideline recommended by USDA Center for Nutrition Policy and Promotion: 30% grains, 40% vegetables, 10% fruits, and 20% protein. Below, look at different categories of food intake in five obese countries: food supply quantity (kg), fat quantity, energy intake (kcal), and protein, to predict the relationship between healthy eating patterns, obesity rates, and mental health.
+
+
+#### Different Categories of Food Intake Quantities for the Top Five Obesity Countries
+```{r, echo=FALSE, message=FALSE, out.width="50%"}
+print(obes_kg_plot)
+print(obes_fat_plot)
+print(obes_kcal_plot)
+print(obes_protein_plot)
+```
+
+The plots above, which display the four different food intake categories in the top five obesity countries, seem to be inconsistent with the recommended dietary guidelines. In terms of these five countries' total dietary intake quantity (kg), the sum of all four food categories (fruits, grains, protein, vegetables) is only about 40%. We can then infer that the remaining 60% of food intake is dairy products, oils, fat, sweets, and others. Therefore, we can predict that the 60% food intake is a significant contributor to their high obesity rate since more than half of what their people eat is considered "unhealthy." Nevertheless, according to the order of intake quantity of the four varieties of food, Kuwait had best follow this order, with the largest consumption of vegetables, followed by grains and protein, and finally fruits. The fat category shows that people in these five countries mainly get fat intake from protein. Although the total fat intake of these four categories in five countries is below 25%, it is still not good because the total intake quantity is only about 40%. As for energy (kcal) intake, this shows that they all get most of their energy (kcal) from grains. Saudi Arabia topped the list with 25% of its kcal intake from protein and followed by Kuwait with about 20%. Finally, people in these countries get their protein mainly from their protein intake, except Saudi Arabia, which gets its protein from grains. In conclusion, the study of four different food intake categories in the top five obesity countries shows a solid relationship between nutrition and health. Because the dietary patterns in these countries are far lower than the recommended dietary guidelines, the obesity rate is very high. In the case of such a high obesity rate, we can also think that the mental health status of these obese people is not necessarily the best because unhealthy eating habits can lead to depression and anxiety.
+
+
+<hr/>
+
+### Distribution of Variables - Suicide Distribution Analysis
+
 Exploring the age distribution in the `Age-standardized suicide rates.csv` file, the global median age-standardized suicide rates is `r age_summary$median` and the mean age-standardized suicide rates is `r age_summary$mean`. The median age-standardized rates is lower than the mean age-standardized rates by more than 2. This indicates that the age distribution is skewed to to the right, which is why the mean age-standardized rates is higher than the median. The standard deviation is `r age_summary$sd`. The minimum age-standardized suicide rate is `r age_summary$min` and the maximum is `r age_summary$max`. There is a large difference between the minimum and maximum age-standardized suicide rates, with a difference of nearly 86. 
 
 Examining the age-standardized suicide rates by year, the global median age-standardized suicide rates decreases each year, from `r year_summary$median[year_summary$year=="X2000"]` in 2000 to `r year_summary$median[year_summary$year=="X2016"]` in 2016. This is also the case for the mean, standard deviation, and maximum age-standardized suicide rates for each year. 
@@ -37,16 +78,15 @@ plot(mean_suicide_gender)
 From the visualization above, we see that the mean age-standardized suicide rates of all countries for both genders went down each year from 2000 to 2016. The biggest decrease in the mean age-standardized suicide rates for both genders was in 2010, where the mean age-standardized suicide rates went from around 18 in 2000 to just above 15 in 2010. The most surprising insight is how different the mean age-standardized suicide rates is between males and females. Although the mean age-standardized suicide rates for both genders have decreased each year globally, the mean age-standardized suicide rates for males is much higher than females each year. I am surprised that the mean age-standardized suicide rates for males is so high. We can see that for males, the mean age-standardized suicide rates is nearly double the mean age-standardized suicide rates for females. Globally, the mean age-standardized suicide rates for females have been below 7 every year. 
 
 <hr/>
+# Relationships between variables
+<hr/>
 
-# Mental Health in Tech Relationship Analysis
-## Plot
+
+### Relationships between variables - Mental Health in Tech Relationship Analysis
 
 ```{r, echo=FALSE}
 plot(work_help_heatmap)
 ```
-
-
-## Analysis
 
 The heatmap was created based on data from the OSMI 2014 Mental Health in Tech Survey. There were `r total_respondents` observations collected and plotted based on the answers to the following questions:
 
@@ -59,8 +99,8 @@ Beyond the number of employees that use resources from wellness programs, a stig
 
 <hr/>
 
-# Suicide Relationship Analysis
-## The Dataset
+### Relationships between variables - Suicide Relationship Analysis
+
 These datasets includes suicide rates from 183 countries. It includes four individual datasets. The first is an age-standardized dataset with suicide rates from 2000, 2010, 2015, and 2016 for males, females, and both. This dataset is skewed right, meaning most of the suicide rates are lower, with a few outliers dragging the mean higher. It also shows that the mean suicide rate has been increasing.
 
 The second dataset includes the crude numbers by age group, starting at age 10, for just the year 2016. This dataset is also skewed right, and the mean suicide rate increases as age increases.
@@ -75,5 +115,6 @@ suicide_relationship_plot
 
 From the visualization above, we see that suicide rates are distributed across a right triangle, with the maximum suicide rate increasing as mental health resources decrease. Where a suicide rate is for a specific country below that line relies on a number of other factors including those discussed above, however the noticeable impact these resources have on a countries suicide rates makes it an important consideration for public policy decisions made around mental health.
 
+## Conclusion
 
 
