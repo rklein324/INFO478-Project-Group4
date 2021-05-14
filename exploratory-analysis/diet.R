@@ -3,11 +3,11 @@ library(tidyr)
 library(ggplot2)
 library(plotly)
 
-fat_data <- read.csv("data/individual/Fat_Supply_Quantity_Data.csv")
-kcal_data <- read.csv("data/individual/Food_Supply_kcal_Data.csv")
-kg_data <- read.csv("data/individual/Food_Supply_Quantity_kg_Data.csv")
-protein_data <- read.csv("data/individual/Protein_Supply_Quantity_Data.csv")
-ideal_diet_data <- read.csv("data/individual/ideal.csv")
+fat_data <- read.csv("../data/individual/Fat_Supply_Quantity_Data.csv")
+kcal_data <- read.csv("../data/individual/Food_Supply_kcal_Data.csv")
+kg_data <- read.csv("../data/individual/Food_Supply_Quantity_kg_Data.csv")
+protein_data <- read.csv("../data/individual/Protein_Supply_Quantity_Data.csv")
+ideal_diet_data <- read.csv("../data/individual/ideal.csv")
 
 obesity_data <- kg_data %>%
   select(Country, Obesity)

@@ -1,0 +1,79 @@
+---
+title: "Suicide Report"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("knitr")
+library("kableExtra")
+library("plotly")
+library("dplyr")
+library("ggplot2")
+library("tidyr")
+library("skimr")
+source("mental_health_tech.R")
+# source("diet.R")
+source("suicide_distribution_analysis.R")
+source("suicide_relationship_analysis.R")
+```
+
+<hr/>
+
+
+# Suicide Distribution Analysis
+
+## Distribution of Variables
+Exploring the age distribution in the `Age-standardized suicide rates.csv` file, the global median age-standardized suicide rates is `r age_summary$median` and the mean age-standardized suicide rates is `r age_summary$mean`. The median age-standardized rates is lower than the mean age-standardized rates by more than 2. This indicates that the age distribution is skewed to to the right, which is why the mean age-standardized rates is higher than the median. The standard deviation is `r age_summary$sd`. The minimum age-standardized suicide rate is `r age_summary$min` and the maximum is `r age_summary$max`. There is a large difference between the minimum and maximum age-standardized suicide rates, with a difference of nearly 86. 
+
+Examining the age-standardized suicide rates by year, the global median age-standardized suicide rates decreases each year, from `r year_summary$median[year_summary$year=="X2000"]` in 2000 to `r year_summary$median[year_summary$year=="X2016"]` in 2016. This is also the case for the mean, standard deviation, and maximum age-standardized suicide rates for each year. 
+
+Exploring the age-standardized suicide rates by gender, globally, males and females have very different median, mean, standard deviation and maxes globally. For females, the median age-standardized suicide rate is `r sex_summary$median[sex_summary$Sex == 'Female']` while for males, it is `r sex_summary$median[sex_summary$Sex == 'Male']`. The median age-standardized suicide rates for males is more than double the rate for females. This is also the case for the mean, where the mean age-standardized suicide rate is `r sex_summary$mean[sex_summary$Sex == 'Female']` for females and `r sex_summary$mean[sex_summary$Sex == 'Male']` for males. The minimum for both genders is 0, but the maximum for females is `r sex_summary$max[sex_summary$Sex == 'Female']` and for males it is `r sex_summary$max[sex_summary$Sex == 'Male']`. The age-standardized suicide rates for males is more than double the age-standardized suicide rates for females.
+
+```{r, echo=FALSE}
+plot(mean_suicide_gender)
+```
+
+From the visualization above, we see that the mean age-standardized suicide rates of all countries for both genders went down each year from 2000 to 2016. The biggest decrease in the mean age-standardized suicide rates for both genders was in 2010, where the mean age-standardized suicide rates went from around 18 in 2000 to just above 15 in 2010. The most surprising insight is how different the mean age-standardized suicide rates is between males and females. Although the mean age-standardized suicide rates for both genders have decreased each year globally, the mean age-standardized suicide rates for males is much higher than females each year. I am surprised that the mean age-standardized suicide rates for males is so high. We can see that for males, the mean age-standardized suicide rates is nearly double the mean age-standardized suicide rates for females. Globally, the mean age-standardized suicide rates for females have been below 7 every year. 
+
+<hr/>
+
+# Mental Health in Tech Relationship Analysis
+## Plot
+
+```{r, echo=FALSE}
+plot(work_help_heatmap)
+```
+
+
+## Analysis
+
+The heatmap was created based on data from the OSMI 2014 Mental Health in Tech Survey. There were `r total_respondents` observations collected and plotted based on the answers to the following questions:
+
+- work_interfere: If you have a mental health condition, do you feel that it interferes with your work?
+- seek_help: Does your employer provide resources to learn more about mental health as part of an employee wellness program?
+
+It is not specified in the survey what their measure for a mental health condition is nor what is explicitly meant by "mental health as part of an employee wellness program," meaning respondents may have different approaches to this question. Out of the `r total_respondents` respondents, `r sometimes_count` indicated that sometimes their mental health condition does interfere with their work, suggesting having resources available is necessary. However, a high number of respondents said that their employer did not provide resources about mental health. In total, `r seek_help_count` people responded that that their workplace did not have provide mental health resources as part of a wellness program.
+
+Beyond the number of employees that use resources from wellness programs, a stigma is bound to exist for those that might seek out help if employers do not make the effort to make help widely known and available. The fact that many of the respondents that indicated mental health sometimes interferes with their work also answered a definitive "no" that mental health resources through programs were not available could suggest that they tried to seek help from their company to no avail. These types of answers leave lots of other questions to unpack such as what specific ways mental health affects the workplace, what types of resources should employers be expected to provide, and what this information implies for a national workforce.
+
+<hr/>
+
+# Suicide Relationship Analysis
+## The Dataset
+These datasets includes suicide rates from 183 countries. It includes four individual datasets. The first is an age-standardized dataset with suicide rates from 2000, 2010, 2015, and 2016 for males, females, and both. This dataset is skewed right, meaning most of the suicide rates are lower, with a few outliers dragging the mean higher. It also shows that the mean suicide rate has been increasing.
+
+The second dataset includes the crude numbers by age group, starting at age 10, for just the year 2016. This dataset is also skewed right, and the mean suicide rate increases as age increases.
+
+Where it gets interesting is with the third and fourth datasets which have the number of mental health related facilities and human resources in each country per 100,000 population. There is some missing data in these datasets, so any variable with more than 20% of the data missing is not included.
+
+The plot below shows the relationship between suicide rates in different countries and their mental health facilities and human resources. You can select the resource and filter by sex to explore the data.
+
+```{r plot, warning=FALSE, echo=FALSE}
+suicide_relationship_plot
+```
+
+From the visualization above, we see that suicide rates are distributed across a right triangle, with the maximum suicide rate increasing as mental health resources decrease. Where a suicide rate is for a specific country below that line relies on a number of other factors including those discussed above, however the noticeable impact these resources have on a countries suicide rates makes it an important consideration for public policy decisions made around mental health.
+
+
+
