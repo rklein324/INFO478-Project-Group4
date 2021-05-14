@@ -1,0 +1,171 @@
+Country,Grains,Vegetables,Fruits,Protein,Unit (all except Population)
+Afghanistan,30,40,10,20,%
+Albania,30,40,10,20,%
+Algeria,30,40,10,20,%
+Angola,30,40,10,20,%
+Antigua and Barbuda,30,40,10,20,%
+Argentina,30,40,10,20,%
+Armenia,30,40,10,20,%
+Australia,30,40,10,20,%
+Austria,30,40,10,20,%
+Azerbaijan,30,40,10,20,%
+Bahamas,30,40,10,20,%
+Bangladesh,30,40,10,20,%
+Barbados,30,40,10,20,%
+Belarus,30,40,10,20,%
+Belgium,30,40,10,20,%
+Belize,30,40,10,20,%
+Benin,30,40,10,20,%
+Bolivia,30,40,10,20,%
+Bosnia and Herzegovina,30,40,10,20,%
+Botswana,30,40,10,20,%
+Brazil,30,40,10,20,%
+Bulgaria,30,40,10,20,%
+Burkina Faso,30,40,10,20,%
+Cabo Verde,30,40,10,20,%
+Cambodia,30,40,10,20,%
+Cameroon,30,40,10,20,%
+Canada,30,40,10,20,%
+Central African Republic,30,40,10,20,%
+Chad,30,40,10,20,%
+Chile,30,40,10,20,%
+China,30,40,10,20,%
+Colombia,30,40,10,20,%
+Congo,30,40,10,20,%
+Costa Rica,30,40,10,20,%
+Cote d'Ivoire,30,40,10,20,%
+Croatia,30,40,10,20,%
+Cuba,30,40,10,20,%
+Cyprus,30,40,10,20,%
+Czechia,30,40,10,20,%
+Denmark,30,40,10,20,%
+Djibouti,30,40,10,20,%
+Dominica,30,40,10,20,%
+Dominican Republic,30,40,10,20,%
+Ecuador,30,40,10,20,%
+Egypt,30,40,10,20,%
+El Salvador,30,40,10,20,%
+Estonia,30,40,10,20,%
+Eswatini,30,40,10,20,%
+Ethiopia,30,40,10,20,%
+Fiji,30,40,10,20,%
+Finland,30,40,10,20,%
+France,30,40,10,20,%
+French Polynesia,30,40,10,20,%
+Gabon,30,40,10,20,%
+Gambia,30,40,10,20,%
+Georgia,30,40,10,20,%
+Germany,30,40,10,20,%
+Ghana,30,40,10,20,%
+Greece,30,40,10,20,%
+Grenada,30,40,10,20,%
+Guatemala,30,40,10,20,%
+Guinea,30,40,10,20,%
+Guinea-Bissau,30,40,10,20,%
+Guyana,30,40,10,20,%
+Haiti,30,40,10,20,%
+Honduras,30,40,10,20,%
+Hungary,30,40,10,20,%
+Iceland,30,40,10,20,%
+India,30,40,10,20,%
+Indonesia,30,40,10,20,%
+Iran (Islamic Republic of),30,40,10,20,%
+Iraq,30,40,10,20,%
+Ireland,30,40,10,20,%
+Israel,30,40,10,20,%
+Italy,30,40,10,20,%
+Jamaica,30,40,10,20,%
+Japan,30,40,10,20,%
+Jordan,30,40,10,20,%
+Kazakhstan,30,40,10,20,%
+Kenya,30,40,10,20,%
+Kiribati,30,40,10,20,%
+"Korea, North",30,40,10,20,%
+"Korea, South",30,40,10,20,%
+Kuwait,30,40,10,20,%
+Kyrgyzstan,30,40,10,20,%
+Lao People's Democratic Republic,30,40,10,20,%
+Latvia,30,40,10,20,%
+Lebanon,30,40,10,20,%
+Lesotho,30,40,10,20,%
+Liberia,30,40,10,20,%
+Lithuania,30,40,10,20,%
+Luxembourg,30,40,10,20,%
+Madagascar,30,40,10,20,%
+Malawi,30,40,10,20,%
+Malaysia,30,40,10,20,%
+Maldives,30,40,10,20,%
+Mali,30,40,10,20,%
+Malta,30,40,10,20,%
+Mauritania,30,40,10,20,%
+Mauritius,30,40,10,20,%
+Mexico,30,40,10,20,%
+Mongolia,30,40,10,20,%
+Montenegro,30,40,10,20,%
+Morocco,30,40,10,20,%
+Mozambique,30,40,10,20,%
+Myanmar,30,40,10,20,%
+Namibia,30,40,10,20,%
+Nepal,30,40,10,20,%
+Netherlands,30,40,10,20,%
+New Caledonia,30,40,10,20,%
+New Zealand,30,40,10,20,%
+Nicaragua,30,40,10,20,%
+Niger,30,40,10,20,%
+Nigeria,30,40,10,20,%
+North Macedonia,30,40,10,20,%
+Norway,30,40,10,20,%
+Oman,30,40,10,20,%
+Pakistan,30,40,10,20,%
+Panama,30,40,10,20,%
+Paraguay,30,40,10,20,%
+Peru,30,40,10,20,%
+Philippines,30,40,10,20,%
+Poland,30,40,10,20,%
+Portugal,30,40,10,20,%
+Republic of Moldova,30,40,10,20,%
+Romania,30,40,10,20,%
+Russian Federation,30,40,10,20,%
+Rwanda,30,40,10,20,%
+Saint Kitts and Nevis,30,40,10,20,%
+Saint Lucia,30,40,10,20,%
+Saint Vincent and the Grenadines,30,40,10,20,%
+Samoa,30,40,10,20,%
+Sao Tome and Principe,30,40,10,20,%
+Saudi Arabia,30,40,10,20,%
+Senegal,30,40,10,20,%
+Serbia,30,40,10,20,%
+Sierra Leone,30,40,10,20,%
+Slovakia,30,40,10,20,%
+Slovenia,30,40,10,20,%
+Solomon Islands,30,40,10,20,%
+South Africa,30,40,10,20,%
+Spain,30,40,10,20,%
+Sri Lanka,30,40,10,20,%
+Sudan,30,40,10,20,%
+Suriname,30,40,10,20,%
+Sweden,30,40,10,20,%
+Switzerland,30,40,10,20,%
+Taiwan*,30,40,10,20,%
+Tajikistan,30,40,10,20,%
+Thailand,30,40,10,20,%
+Timor-Leste,30,40,10,20,%
+Togo,30,40,10,20,%
+Trinidad and Tobago,30,40,10,20,%
+Tunisia,30,40,10,20,%
+Turkey,30,40,10,20,%
+Turkmenistan,30,40,10,20,%
+Uganda,30,40,10,20,%
+Ukraine,30,40,10,20,%
+United Arab Emirates,30,40,10,20,%
+United Kingdom,30,40,10,20,%
+United Republic of Tanzania,30,40,10,20,%
+United States of America,30,40,10,20,%
+Uruguay,30,40,10,20,%
+Uzbekistan,30,40,10,20,%
+Vanuatu,30,40,10,20,%
+Venezuela (Bolivarian Republic of),30,40,10,20,%
+Vietnam,30,40,10,20,%
+Yemen,30,40,10,20,%
+Zambia,30,40,10,20,%
+Zimbabwe,30,40,10,20,%
