@@ -2,11 +2,66 @@
 library(shiny)
 library(ggplot2)
 library(plotly)
+library(dplyr)
+library(tidyr)
 
-# read dataset 
+# read datasets 
+age_standardized_suicide <- read.csv("./data/national/Age-standardized suicide rates.csv")
+facilities <- read.csv("./data/national/Facilities.csv")
 
+# remove leading & trailing spaces
+age_standardized_suicide$Sex <- trimws(age_standardized_suicide$Sex, which = c("both"))
+
+# remove missings
+facilities <- facilities %>% 
+  drop_na()
+
+
+facilities <- facilities %>% 
+  rename("mental_hospitals" = "Mental._hospitals",
+         "outpatient_facilities" = "outpatient._facilities")
+
+facilities_choices <- list(
+  "Mental hospitals" = "mental_hospitals",
+  "Health units" = "health_units",
+  "Outpatient facilities" = "outpatient_facilities",
+  "Residential facilities" = "residential_facilities"
+)
+
+age_standardized_suicide <- age_standardized_suicide %>%
+  filter(Sex == "Both sexes") %>%
+  rename("suicide_rate" = X2016) %>%
+  select(Country, "suicide_rate")
+
+plot_data <- inner_join(age_standardized_suicide, facilities)
+#   
+# p <- plot_ly(
+#   data = plot_data,
+#   mode = "markers",
+#   type = "scatter",
+#   x = ~mental_hospitals,
+#   y = ~suicide_rate
+# ) %>% layout(
+#   title = "Suicide rates vs Facilities",
+#   xaxis = list(title = "Number of Facilities"), 
+#   yaxis = list(title = "Suicide Rates")
+# )
+
+# p <- ggplot(
+#   data = plot_data,
+#   mapping = aes(x = suicide_rate, y = mental_hospitals)
+# ) +
+#   geom_point() +
+#   labs(
+#   title = "Suicide rates vs Facilities",
+#   xlab = "Suicide Rates",
+#   ylab = "Number of Facilities"
+# )
 
 # --------- CREATE WIDGETS ---------- 
+# drop down widget for viz #1
+viz1_widget <- selectInput(inputId = "facility_type", label = h3("Select Facility Type"), 
+            choices = facilities_choices)
 
 
 
@@ -21,10 +76,10 @@ page_two <- tabPanel(
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
-      # widgets
+      viz1_widget
     ),
     mainPanel(
-    # plot
+      plotOutput("viz1")
     )
   )
 )
