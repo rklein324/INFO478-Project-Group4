@@ -68,7 +68,7 @@ viz1_widget <- selectInput(inputId = "facility_type", label = h3("Select Facilit
 # --------- CREATE PAGES ---------- 
 
 page_one <- tabPanel(
-  "Introduction",
+  "Introduction"
 )
 
 page_two <- tabPanel(
