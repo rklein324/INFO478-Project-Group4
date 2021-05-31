@@ -63,6 +63,9 @@ plot_data <- inner_join(age_standardized_suicide, facilities)
 viz1_widget <- selectInput(inputId = "facility_type", label = h3("Select Facility Type"), 
             choices = facilities_choices)
 
+viz2_widget <- selectInput(inputId = "human_resources", label = h3("Select Human Resource Type"), 
+                         choices = hr_choices)
+
 viz3_widget <- selectInput(inputId = "total_selection", label = h3("Select Resource Type"), 
                            choices = list("Facilities (unweighted)" = "total_facilities",
                                           "Facilities (weighted)" = "total_facilities_wt",
@@ -93,10 +96,10 @@ page_three <- tabPanel(
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
-      # widgets
+      viz2_widget
     ),
     mainPanel(
-    # plot
+      plotOutput("viz2")
     )
   )
 )

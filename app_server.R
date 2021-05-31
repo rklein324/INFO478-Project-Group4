@@ -17,7 +17,7 @@ age_standardized_suicide$Sex <- trimws(age_standardized_suicide$Sex, which = c("
 
 # drop unused variables
 facilities <- subset(facilities, select = c("Country", "Mental._hospitals", "outpatient._facilities", "health_units"))
-human_resources <- subset(human_resources, select = c("Country", "Psychiatrists", "Nurses", "Psychologists"))
+human_resources <- subset(human_resources, select = c("Country", "Psychiatrists", "Nurses", "Psychologists", "Social_workers"))
 
 # remove missings
 facilities <- facilities %>% 
@@ -38,6 +38,7 @@ age_standardized_suicide <- age_standardized_suicide %>%
 
 # join data
 plot_data <- inner_join(age_standardized_suicide, facilities)
+join_data <- inner_join(age_standardized_suicide, human_resources, by = "Country")
 plot_data <- inner_join(plot_data, human_resources)
 
 # ------- INTERACTIVE VISUALIZAION PLOT ------- 
@@ -68,6 +69,19 @@ server <- function(input, output) {
     #   xlab = "Suicide Rates",
     #   ylab = "Number of Facilities"
     # )
+    return(p)
+  })
+  
+  output$viz2 <- renderPlot({
+    p <- ggplot(
+      data = join_data,
+      mapping = aes_string(x = "suicide_rate", y = input$human_resources)
+    ) +
+      geom_point() +
+      geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$human_resources)) +
+      geom_text(label=join_data$Country, nudge_y = 0.2) +
+      xlab("Suicide Rates") +
+      ylab("Number of Human Resources")
     return(p)
   })
   
