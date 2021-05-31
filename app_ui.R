@@ -32,7 +32,52 @@ viz3_widget <- selectInput(inputId = "total_selection", label = h3("Select Resou
 # --------- CREATE PAGES ---------- 
 
 page_one <- tabPanel(
-  "Introduction"
+  "Introduction",
+  titlePanel("Introduction"),
+  mainPanel(
+    h2(strong("Objective")),
+    p("The main objective of this report is to look at suicide
+      rates globally to investigate the best mental health care
+      strategies to implement at a policy level. Individuals can
+      enact methods to benefit their mental health on a personal
+      level, but resources also need to be made available by
+      government bodies. This requires policy intervention in
+      order to meet",
+      a("public health goals", href =
+          "https://www.who.int/news-room/fact-sheets/detail/suicide"),
+      "and to create healthy trends for future generations."),
+    p("Countries around the world have their own health measures
+      in place for physical needs as well as mental health. They
+      vary in the care they provide and in how much is made
+      widely available. By looking at the suicide rates per
+      country provided by the World Health Organization (WHO),
+      the effectiveness of the mental health care can be compared
+      across many nations. The differences lie with the mental
+      health facilities and the human resources trained for
+      mental health care. Having more of each resource would be
+      beneficial, but policy makers and public health officials
+      need to prioritize implementing the most effective mental
+      health care strategy that funding will allow them."),
+    h2(strong("Dataset")),
+    p("The data was retrieved from",
+      a("Kaggle.com", href =
+          "https://www.kaggle.com/twinkle0705/mental-health-and-suicide-rates?select=Age-standardized+suicide+rates.csv"),
+      "by a user who utilized data from WHO. There are four files
+      included with values broken down by country. Two of the
+      tables look at human resources and mental health
+      facilities per country and the remaining two look at crude
+      suicide rates and age-standardized suicide rates per
+      country. The data is reported from 2016 and covers suicide
+      rates across gender and age ranges."),
+    h2(strong("Sections of Analysis")),
+    p("To get a clearer picture, we will breakdown which type of
+      mental health facilities and human resources seem to have
+      the most positive effect at reducing suicide rates. In the
+      final visualization, we aggregate the data into facility
+      types and human resource types with the option
+      to weigh the resource based on its effectiveness in
+      reducing suicide rates for a given country.")
+  )
 )
 
 page_two <- tabPanel(
