@@ -72,21 +72,69 @@ server <- function(input, output) {
   })
   
   output$viz3 <- renderPlot({
+    # calculate weight for each resource
+    max_suicide <- plot_data %>%
+      filter(suicide_rate == max(suicide_rate))
+    max_mental_hospitals <- plot_data %>%
+      filter(mental_hospitals == max(mental_hospitals))
+    max_outpatient_facilities <- plot_data %>%
+      filter(outpatient_facilities == max(outpatient_facilities))
+    max_health_units <- plot_data %>%
+      filter(health_units == max(health_units))
+    max_Psychiatrists <- plot_data %>%
+      filter(Psychiatrists == max(Psychiatrists))
+    max_Nurses <- plot_data %>%
+      filter(Nurses == max(Nurses))
+    max_Psychologists <- plot_data %>%
+      filter(Psychologists == max(Psychologists))
+    
+    resources <- c("mental_hospitals", "outpatient_facilities", "health_units", "Psychiatrists", "Nurses", "Psychologists")
+    
+    resource_a <- c(max_suicide$mental_hospitals,
+                      max_suicide$outpatient_facilities,
+                      max_suicide$health_units,
+                      max_suicide$Psychiatrists,
+                      max_suicide$Nurses,
+                      max_suicide$Psychologists)
+    
+    suicide_a <- max_suicide$suicide_rate
+    
+    resource_b <- c(max_mental_hospitals$mental_hospitals,
+                      max_outpatient_facilities$outpatient_facilities,
+                      max_health_units$health_units,
+                      max_Psychiatrists$Psychiatrists,
+                      max_Nurses$Nurses,
+                      max_Psychologists$Psychologists)
+    
+    suicide_b <- c(max_mental_hospitals$suicide_rate,
+                    max_outpatient_facilities$suicide_rate,
+                    max_health_units$suicide_rate,
+                    max_Psychiatrists$suicide_rate,
+                    max_Nurses$suicide_rate,
+                    max_Psychologists$suicide_rate)
+
+    resource_weights <- data.frame(resource_a, suicide_a, resource_b, suicide_b)
+    row.names(resource_weights) <- resources
+    
+    resource_weights <- resource_weights %>%
+      mutate(weight = (suicide_b - suicide_a) / (resource_b - resource_a) * -1)
+
+    # add aggregated columns for resource type
     grouped_data <- plot_data %>%
       mutate(total_facilities = mental_hospitals + outpatient_facilities + health_units) %>%
       mutate(total_hr = Psychiatrists + Nurses + Psychologists) %>%
-      mutate(total_facilities_wt = (mental_hospitals * 1) + (outpatient_facilities * 1) + (health_units * 1)) %>%
-      mutate(total_hr_wt = (Psychiatrists * 1) + (Nurses * 1) + (Psychologists * 1))
+      mutate(total_facilities_wt = (mental_hospitals * resource_weights$weight[[1]]) + (outpatient_facilities * resource_weights$weight[[2]]) + (health_units * resource_weights$weight[[3]])) %>%
+      mutate(total_hr_wt = (Psychiatrists * resource_weights$weight[[4]]) + (Nurses * resource_weights$weight[[5]]) + (Psychologists * resource_weights$weight[[6]]))
 
     p <- ggplot(
         data = grouped_data,
-        mapping = aes_string(x = "suicide_rate", y = input$total_selection)
+        mapping = aes_string(x = input$total_selection, y = "suicide_rate")
       ) +
         geom_point() +
-        geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$total_selection)) +
+        geom_smooth(mapping = aes_string(x = input$total_selection, y = "suicide_rate")) +
         geom_text(label=plot_data$Country, nudge_y = 0.2) +
-        xlab("Suicide Rates") +
-        ylab("Number of Resources")
+        xlab("Number of Resources") +
+        ylab("Suicide Rates")
       return(p)
   })
 }
