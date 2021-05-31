@@ -15,6 +15,10 @@ human_resources <- read.csv("./data/national/Human Resources.csv")
 # remove leading & trailing spaces
 age_standardized_suicide$Sex <- trimws(age_standardized_suicide$Sex, which = c("both"))
 
+# drop unused variables
+facilities <- subset(facilities, select = c("Country", "Mental._hospitals", "outpatient._facilities", "health_units"))
+human_resources <- subset(human_resources, select = c("Country", "Psychiatrists", "Nurses", "Psychologists"))
+
 # remove missings
 facilities <- facilities %>% 
   drop_na()
