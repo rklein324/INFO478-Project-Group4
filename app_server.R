@@ -9,6 +9,7 @@ library(tidyverse)
 # load data
 age_standardized_suicide <- read.csv("./data/national/Age-standardized suicide rates.csv")
 facilities <- read.csv("./data/national/Facilities.csv")
+human_resources <- read.csv("./data/national/Human Resources.csv")
 
 # ------- CLEAN DATA --------- 
 # remove leading & trailing spaces
@@ -18,6 +19,10 @@ age_standardized_suicide$Sex <- trimws(age_standardized_suicide$Sex, which = c("
 facilities <- facilities %>% 
   drop_na()
 
+human_resources <- human_resources %>% 
+  drop_na()
+
+# rename variables
 facilities <- facilities %>% 
   rename("mental_hospitals" = "Mental._hospitals",
          "outpatient_facilities" = "outpatient._facilities")
@@ -27,8 +32,9 @@ age_standardized_suicide <- age_standardized_suicide %>%
   rename("suicide_rate" = X2016) %>% 
   select(Country, "suicide_rate")
 
+# join data
 plot_data <- inner_join(age_standardized_suicide, facilities)
-
+plot_data <- inner_join(plot_data, human_resources)
 
 # ------- INTERACTIVE VISUALIZAION PLOT ------- 
 server <- function(input, output) {
