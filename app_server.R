@@ -70,4 +70,23 @@ server <- function(input, output) {
     # )
     return(p)
   })
+  
+  output$viz3 <- renderPlot({
+    grouped_data <- plot_data %>%
+      mutate(total_facilities = mental_hospitals + outpatient_facilities + health_units) %>%
+      mutate(total_hr = Psychiatrists + Nurses + Psychologists) %>%
+      mutate(total_facilities_wt = (mental_hospitals * 1) + (outpatient_facilities * 1) + (health_units * 1)) %>%
+      mutate(total_hr_wt = (Psychiatrists * 1) + (Nurses * 1) + (Psychologists * 1))
+
+    p <- ggplot(
+        data = grouped_data,
+        mapping = aes_string(x = "suicide_rate", y = input$total_selection)
+      ) +
+        geom_point() +
+        geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$total_selection)) +
+        geom_text(label=plot_data$Country, nudge_y = 0.2) +
+        xlab("Suicide Rates") +
+        ylab("Number of Resources")
+      return(p)
+  })
 }
