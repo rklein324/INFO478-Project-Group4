@@ -13,21 +13,25 @@ facilities_choices <- list(
 
 hr_choices <- c("Psychiatrists", "Nurses", "Psychologists")
 
+comparison_choices <-list("Facilities (unweighted)" = "total_facilities",
+                          "Facilities (weighted)" = "total_facilities_wt",
+                          "Human Resources (unweighted)" = "total_hr",
+                          "Human Resources (weighted)" = "total_hr_wt")
+
 # --------- CREATE WIDGETS ---------- 
 # drop down widget for viz #1
 viz1_widget <- selectInput(inputId = "facility_type", label = h3("Select Facility Type"), 
             choices = facilities_choices)
 
 # drop down widget for viz #2
-viz2_widget <- selectInput(inputId = "human_resources", label = h3("Select Human Resource Type"), 
-                         choices = hr_choices)
+viz2_widget <- selectInput(inputId = "human_resources",
+                           label = h3("Select Human Resource Type"), 
+                           choices = hr_choices)
 
 # drop down widget for viz #3
-viz3_widget <- selectInput(inputId = "total_selection", label = h3("Select Resource Type"), 
-                           choices = list("Facilities (unweighted)" = "total_facilities",
-                                          "Facilities (weighted)" = "total_facilities_wt",
-                                          "Human Resources (unweighted)" = "total_hr",
-                                          "Human Resources (weighted)" = "total_hr_wt"))
+viz3_widget <- selectInput(inputId = "total_selection",
+                           label = h3("Select Resource Type"), 
+                           choices = comparison_choices)
 
 # --------- CREATE PAGES ---------- 
 
@@ -81,21 +85,24 @@ page_one <- tabPanel(
 )
 
 page_two <- tabPanel(
-  "Viz 1",
+  "Facilities for Mental Health",
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
-      viz1_widget
+      viz1_widget,
+      tableOutput("table1")
     ),
     mainPanel(
       plotOutput("viz1"),
-      tableOutput("table1")
+      h3("Analysis"),
+      p("Filler")
     )
   )
 )
 
 page_three <- tabPanel(
-  "Viz 2",
+  "Human Resources for
+      Mental Health",
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
@@ -125,7 +132,6 @@ page_five <- tabPanel(
   titlePanel("")
 )
 
-
 # --------- DEFINING UI: PUTTING PAGES TOGETHER ---------- 
 ui <- navbarPage(
   "Title",
@@ -135,4 +141,3 @@ ui <- navbarPage(
   page_four,
   page_five
 )
-
