@@ -63,17 +63,25 @@ plot_data_totals <- plot_data %>%
 # ------- INTERACTIVE VISUALIZAION PLOT ------- 
 server <- function(input, output) {
   output$viz1 <- renderPlot({
+<<<<<<< HEAD
     viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$facility_type))
     viz_data <- viz_data %>% 
         drop_na()
 
+=======
+>>>>>>> d288215ca8beeb44cfcab3e9fadfcbc6176e6b96
     p <- ggplot(
       data = viz_data,
       mapping = aes_string(x = "suicide_rate", y = input$facility_type)
     ) +
       geom_point() +
+<<<<<<< HEAD
       geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$facility_type)) +
       geom_text(label=viz_data$Country, nudge_y = 0.2) +
+=======
+      # geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$facility_type)) +
+      geom_text(label=plot_data$Country, nudge_y = 0.2) +
+>>>>>>> d288215ca8beeb44cfcab3e9fadfcbc6176e6b96
       xlab("Suicide Rates") +
       ylab("Number of Facilities")
     return(p)
