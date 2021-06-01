@@ -88,7 +88,8 @@ page_two <- tabPanel(
       viz1_widget
     ),
     mainPanel(
-      plotOutput("viz1")
+      plotOutput("viz1"),
+      tableOutput("table1")
     )
   )
 )

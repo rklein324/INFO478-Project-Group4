@@ -99,16 +99,35 @@ plot_data <- plot_data %>%
 # ------- INTERACTIVE VISUALIZAION PLOT ------- 
 server <- function(input, output) {
   output$viz1 <- renderPlot({
+    y_offset = 0.0
+    if(input$facility_type == "mental_hospitals") {
+      y_offset = 0.4
+    }
+    
+    if(input$facility_type == "health_units") {
+      y_offset = 0.03
+    }
+    
+    if(input$facility_type == "outpatient_facilities") {
+      y_offset = 0.6
+    }
+  
+    
     p <- ggplot(
       data = plot_data,
       mapping = aes_string(x = "suicide_rate", y = input$facility_type)
     ) +
       geom_point() +
-      # geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$facility_type)) +
-      geom_text(label=plot_data$Country, nudge_y = 0.2) +
+      geom_text(label=plot_data$Country, nudge_y = y_offset, check_overlap = TRUE, angle = 15) +
       xlab("Suicide Rates") +
       ylab("Number of Facilities")
     return(p)
+  })
+  
+  output$table1 <- renderTable({
+    plot_data %>% 
+      select(Country, input$facility_type) %>% 
+      arrange(desc(!!rlang::sym(input$facility_type)))
   })
   
   output$viz2 <- renderPlot({
@@ -118,7 +137,7 @@ server <- function(input, output) {
     ) +
       geom_point() +
       geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$human_resources)) +
-      geom_text(label=join_data$Country, nudge_y = 0.2) +
+      geom_text(label=join_data$Country, nudge_y = 1, check_overlap = TRUE, angle = 15) +
       xlab("Suicide Rates") +
       ylab("Number of Human Resources")
     return(p)
@@ -131,7 +150,7 @@ server <- function(input, output) {
       ) +
         geom_point() +
         geom_smooth(mapping = aes_string(x = input$total_selection, y = "suicide_rate")) +
-        geom_text(label=plot_data$Country, nudge_y = 0.2) +
+        geom_text(label=plot_data$Country, nudge_y = 1, check_overlap = TRUE, angle = 15) +
         xlab("Number of Resources") +
         ylab("Suicide Rates")
       return(p)
