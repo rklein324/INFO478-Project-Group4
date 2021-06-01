@@ -80,7 +80,24 @@ server <- function(input, output) {
     viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$facility_type))
     viz_data <- viz_data %>% 
         drop_na()
-
+    
+    
+    line_plot_data_mental_hospitals <- plot_data %>% 
+      select(Country, suicide_rate, mental_hospitals) %>% 
+      drop_na() %>% 
+      filter(Country == "Guyana" | Country == "Japan")
+      
+    line_plot_data_health_units <- plot_data %>% 
+      select(Country, suicide_rate, health_units) %>% 
+      drop_na() %>% 
+      filter(Country == "Guyana" | Country == "Hungary")
+      
+    line_plot_data_outpatient_facilities <- plot_data %>% 
+      select(Country, suicide_rate, outpatient_facilities) %>%
+      drop_na() %>% 
+      filter(Country == "Guyana" | Country == "Saint Lucia")
+      
+    
     p <- ggplot(
       data = viz_data,
       mapping = aes_string(x = input$facility_type, y = "suicide_rate")
@@ -90,6 +107,25 @@ server <- function(input, output) {
       xlab("Number of Facilities") +
       ylab("Suicide Rates") +
       ggtitle("Number of Facilities vs Suicide Rates")
+    
+    if(input$facility_type == "mental_hospitals") {
+      p <- p + geom_line(data = line_plot_data_mental_hospitals, 
+                         aes(x = mental_hospitals, y = suicide_rate),
+                         color = "blue")
+    }
+    
+    if(input$facility_type == "health_units") {
+      p <- p + geom_line(data = line_plot_data_health_units, 
+                         aes(x = health_units, y = suicide_rate), 
+                         color = "blue")
+    }
+    
+    if(input$facility_type == "outpatient_facilities") {
+      p <- p + geom_line(data = line_plot_data_outpatient_facilities, 
+                         aes(x = outpatient_facilities, y = suicide_rate),
+                         color = "blue")
+    }
+    
     return(p)
   })
   
@@ -117,7 +153,7 @@ server <- function(input, output) {
       geom_text(label=viz_data$Country, nudge_y = 1, check_overlap = TRUE) +
       xlab("Number of Human Resources") +
       ylab("Suicide Rates") +
-      ggtitle("Number of Human Resource vs Suicide Rates")
+      ggtitle("Number of Human Resources vs Suicide Rates")
     return(p)
   })
   

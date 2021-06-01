@@ -6,9 +6,9 @@ library(dplyr)
 library(tidyr)
 
 facilities_choices <- list(
-  "Mental hospitals" = "mental_hospitals",
-  "Health units" = "health_units",
-  "Outpatient facilities" = "outpatient_facilities"
+  "Mental Hospitals" = "mental_hospitals",
+  "Health Units" = "health_units",
+  "Outpatient Facilities" = "outpatient_facilities"
 )
 
 hr_choices <- c("Psychiatrists", "Nurses", "Psychologists")
@@ -95,6 +95,11 @@ page_two <- tabPanel(
     mainPanel(
       plotOutput("viz1"),
       h3("Analysis"),
+      h4("Analysis on Mental Hospitals and Suicide Rates"),
+      p("Filler"),
+      h4("Analysis on Health Units and Suicide Rates"),
+      p("Filler"),
+      h4("Analysis on Outpatient Facilities and Suicide Rates"),
       p("Filler")
     )
   )
