@@ -98,7 +98,8 @@ page_two <- tabPanel(
 )
 
 page_three <- tabPanel(
-  "Viz 2",
+  "Human Resources for
+      Mental Health",
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(

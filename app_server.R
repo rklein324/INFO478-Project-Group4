@@ -86,13 +86,12 @@ server <- function(input, output) {
     
     p <- ggplot(
       data = viz_data,
-      mapping = aes_string(x = "suicide_rate", y = input$human_resources)
+      mapping = aes_string(x = input$human_resources, y = "suicide_rate")
     ) +
       geom_point() +
-      geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$human_resources)) +
       geom_text(label=viz_data$Country, nudge_y = 0.2) +
-      xlab("Suicide Rates") +
-      ylab("Number of Human Resources")
+      xlab("Number of Human Resources") +
+      ylab("Suicide Rates")
     return(p)
   })
   
