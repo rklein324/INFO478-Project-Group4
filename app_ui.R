@@ -138,14 +138,16 @@ page_three <- tabPanel(
 )
 
 page_four <- tabPanel(
-  "Viz 3",
+  "Facilities vs. Human Resources",
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
-      viz3_widget
+      viz3_widget,
+      tableOutput("table3")
     ),
     mainPanel(
-      plotOutput("viz3")
+      plotOutput("viz3"),
+      plotlyOutput("viz3.1")
     )
   )
 )

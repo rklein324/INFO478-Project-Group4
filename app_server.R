@@ -71,10 +71,10 @@ for (r in resources) {
     filter(suicide_rate == max(suicide_rate, na.rm = TRUE))
   max_r <- plot_data %>%
     filter(plot_data[r] == max(plot_data[r], na.rm = TRUE))
-  resource_weights[r, "x1"] <- max_suicide$suicide_rate
-  resource_weights[r, "y1"] <- max_suicide[r]
-  resource_weights[r, "x2"] <- max_r$suicide_rate
-  resource_weights[r, "y2"] <- max_r[r]
+  resource_weights[r, "y1"] <- max_suicide$suicide_rate
+  resource_weights[r, "x1"] <- max_suicide[r]
+  resource_weights[r, "y2"] <- max_r$suicide_rate
+  resource_weights[r, "x2"] <- max_r[r]
 }
 
 resource_weights <- resource_weights %>%
@@ -88,6 +88,26 @@ plot_data_totals <- plot_data %>%
   mutate(total_hr = Psychiatrists + Nurses + Psychologists) %>%
   mutate(total_facilities_wt = (mental_hospitals * resource_weights$weight[[1]]) + (outpatient_facilities * resource_weights$weight[[2]]) + (health_units * resource_weights$weight[[3]])) %>%
   mutate(total_hr_wt = (Psychiatrists * resource_weights$weight[[4]]) + (Nurses * resource_weights$weight[[5]]) + (Psychologists * resource_weights$weight[[6]]))
+
+# select data for line segments
+line_facilities <- plot_data_totals %>% 
+  select(Country, suicide_rate, total_facilities) %>% 
+  drop_na() %>% 
+  filter(Country == "Guyana" | Country == "Saint Lucia")
+
+line_facilities_wt <- plot_data_totals %>% 
+  select(Country, suicide_rate, total_facilities_wt) %>% 
+  drop_na() %>% 
+  filter(Country == "Guyana" | Country == "Japan")
+
+line_hr <- plot_data_totals %>% 
+  select(Country, suicide_rate, total_hr) %>%
+  drop_na() %>% 
+  filter(Country == "Guyana" | Country == "Argentina")
+
+line_hr_wt <- plot_data_totals %>% 
+  select(Country, suicide_rate, total_hr_wt) %>% 
+  filter(Country == "Guyana" | Country == "Argentina")
 
 # ------- INTERACTIVE VISUALIZAION PLOT ------- 
 server <- function(input, output) {
@@ -289,14 +309,103 @@ server <- function(input, output) {
   output$viz3 <- renderPlot({
     p <- ggplot(
       data = plot_data_totals,
-      mapping = aes_string(x = "suicide_rate", y = input$total_selection)
+      mapping = aes_string(x = input$total_selection, y = "suicide_rate")
     ) +
       geom_point() +
-      geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$total_selection)) +
       geom_text(label=plot_data_totals$Country, nudge_y = 1, check_overlap = TRUE) +
-      xlab("Suicide Rates") +
-      ylab("Number of Resources") +
+      xlab("Number of Resources") +
+      ylab("Suicide Rates") +
       ggtitle("Number of Resources vs Suicide Rates")
+    
+    # add line segment
+    if(input$total_selection == "total_facilities") {
+      p <- p + geom_line(data = line_facilities, 
+                         aes(x = total_facilities, y = suicide_rate),
+                         color = "blue")
+    }
+    
+    if(input$total_selection == "total_facilities_wt") {
+      p <- p + geom_line(data = line_facilities_wt, 
+                         aes(x = total_facilities_wt, y = suicide_rate),
+                         color = "blue")
+    }
+    
+    if(input$total_selection == "total_hr") {
+      p <- p + geom_line(data = line_hr, 
+                         aes(x = total_hr, y = suicide_rate),
+                         color = "blue")
+    }
+    
+    if(input$total_selection == "total_hr_wt") {
+      p <- p + geom_line(data = line_hr_wt, 
+                         aes(x = total_hr_wt, y = suicide_rate),
+                         color = "blue")
+    }
+    
     return(p)
+  })
+  
+  output$viz3.1 <- renderPlotly({
+    # drop NA values for resource selection
+    viz_data <- subset(plot_data_totals, select = c("Country", "suicide_rate", input$total_selection))
+    viz_data <- viz_data %>% 
+      drop_na() %>% 
+      rename("Suicide Rate" = "suicide_rate")
+    
+    # select data
+    top_10 <- viz_data %>%
+      select(Country, "Suicide Rate", input$total_selection) %>% 
+      arrange(desc(!!rlang::sym(input$total_selection))) %>%
+      slice(1:10)
+    
+    df <- gather(top_10, event, total, 'Suicide Rate':input$total_selection)
+    
+    # create bar chart
+    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+      geom_bar(stat = "identity", position = "dodge", colour = "black") +
+      ggtitle("Relationship between Total Resources and Suicide Rate") +
+      labs(x = "Country", y = "Resources") +
+      labs(fill = "Comparsion") +
+      scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
+      theme(axis.text.x = element_text(angle = 45))
+    
+    return(ggplotly(p))
+  })
+  
+  output$table3 <- renderTable({
+    # drop NA values for resource selection
+    viz_data <- subset(plot_data_totals, select = c("Country", "suicide_rate", input$total_selection))
+    viz_data <- viz_data %>% 
+      drop_na() %>% 
+      rename("Suicide Rate" = "suicide_rate")
+    
+    # select data
+    t <- viz_data %>% 
+      select(Country, input$total_selection, "Suicide Rate") %>% 
+      arrange(desc(!!rlang::sym(input$total_selection))) %>% 
+      slice(1:20)
+    
+    # rename headers
+    if(input$total_selection == "total_facilities"){
+      t <- t %>% 
+        rename("Facilities" = "total_facilities")
+    }
+    
+    if(input$total_selection == "total_facilities_wt"){
+      t <- t %>% 
+        rename("Facilities * Weight" = "total_facilities_wt")
+    }
+    
+    if(input$total_selection == "total_hr"){
+      t <- t %>% 
+        rename("Human Resources" = "total_hr")
+    }
+    
+    if(input$total_selection == "total_hr_wt"){
+      t <- t %>% 
+        rename("Human Resources * Weight" = "total_hr_wt")
+    }
+    
+    return(t)
   })
 }
