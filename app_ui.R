@@ -115,7 +115,7 @@ page_three <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz2"),
-      tableOutput("table3")
+      plotlyOutput("viz2.1")
     )
   )
 )
