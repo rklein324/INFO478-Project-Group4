@@ -106,15 +106,16 @@ page_two <- tabPanel(
 )
 
 page_three <- tabPanel(
-  "Human Resources for
-      Mental Health",
+  "Human Resources for Mental Health",
   titlePanel(""),
   sidebarLayout(
     sidebarPanel(
-      viz2_widget
+      viz2_widget,
+      tableOutput("table2")
     ),
     mainPanel(
-      plotOutput("viz2")
+      plotOutput("viz2"),
+      tableOutput("table3")
     )
   )
 )

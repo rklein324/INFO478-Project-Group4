@@ -144,17 +144,69 @@ server <- function(input, output) {
     viz_data <- viz_data %>% 
       drop_na()
     
+    x_axis <- input$human_resources
+    
+    line_psychiatrists <- plot_data %>% 
+      select(Country, suicide_rate, Psychiatrists) %>% 
+      filter(Country == "Guyana" | Country == "Norway")
+    
+    line_nurses <- plot_data %>% 
+      select(Country, suicide_rate, Nurses) %>% 
+      filter(Country == "Lithuania" | Country == "Turkey")
+    
+    line_psychologists <- plot_data %>% 
+      select(Country, suicide_rate, Psychologists) %>%
+      filter(Country == "Guyana" | Country == "Argentina")
+    
     p <- ggplot(
       data = viz_data,
-      mapping = aes_string(x = input$human_resources, y = "suicide_rate")
+      mapping = aes_string(x = x_axis, y = "suicide_rate")
     ) +
       geom_point() +
-      geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$human_resources)) +
       geom_text(label=viz_data$Country, nudge_y = 1, check_overlap = TRUE) +
-      xlab("Number of Human Resources") +
+      xlab(x_axis) +
       ylab("Suicide Rates") +
       ggtitle("Number of Human Resources vs Suicide Rates")
+    
+    if(input$human_resources == "Psychiatrists") {
+      p <- p + geom_line(data = line_psychiatrists, 
+                         aes(x = Psychiatrists, y = suicide_rate),
+                         color = "purple")
+    }
+    
+    if(input$human_resources == "Nurses") {
+      p <- p + geom_line(data = line_nurses, 
+                         aes(x = Nurses, y = suicide_rate), 
+                         color = "purple")
+    }
+    
+    if(input$human_resources == "Psychologists") {
+      p <- p + geom_line(data = line_psychologists, 
+                         aes(x = Psychologists, y = suicide_rate),
+                         color = "purple")
+    }
     return(p)
+  })
+  
+  output$table2 <- renderTable({
+    viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$human_resources))
+    viz_data <- viz_data %>% 
+      drop_na()
+    
+    viz_data %>% 
+      select(Country, input$human_resources) %>% 
+      arrange(desc(!!rlang::sym(input$human_resources)))
+  })
+  
+  output$table3 <- renderTable({
+    viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$human_resources))
+    viz_data <- viz_data %>% 
+      drop_na() %>% 
+      rename("Suicide Rate" = "suicide_rate")
+      
+    viz_data %>% 
+      select(Country, "Suicide Rate") %>% 
+      arrange(desc(!!rlang::sym("Suicide Rate")))
   })
   
   output$viz3 <- renderPlot({
@@ -166,7 +218,7 @@ server <- function(input, output) {
         geom_smooth(mapping = aes_string(x = "suicide_rate", y = input$total_selection)) +
         geom_text(label=plot_data_totals$Country, nudge_y = 1, check_overlap = TRUE) +
         xlab("Suicide Rates") +
-        ylab("Number of Resources")+
+        ylab("Number of Resources") +
    ggtitle("Number of Resources vs Suicide Rates")
       return(p)
   })
