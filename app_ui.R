@@ -94,16 +94,30 @@ page_two <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz1"),
+      br(),
       plotlyOutput("viz1.1"),
       h3("Analysis"),
-      h4("Analysis on Mental Hospitals and Suicide Rates"),
-      p("Filler"),
-      br(),
-      h4("Analysis on Health Units and Suicide Rates"),
-      p("Filler"),
-      br(),
-      h4("Analysis on Outpatient Facilities and Suicide Rates"),
-      p("Filler")
+      p("There are three mental health facility types users can select: 
+        Mental Hospitals, Health Units, and Outpatient Facilities. When a 
+        facility type is selected, the table below the facility type selection 
+        input gets updated to display the top 20 countries with the most facilities
+        of the selected facility type along with the country's suicide rate."),
+      p("In the first chart, the scatterplot shows the number of mental health facilities and the 
+        suicide rate for each country. For all three facility types, we see that 
+        the countries of Guyana and Lithuania have the highest suicide rates
+        and some of the fewest number of facilities per 100,000 people. The country with the 
+        most number of facilities changes each time depending on the facility type. For mental
+        hospitals, Japan has the most number of facilities while Hungary has the most number 
+        of health units and Saint Lucia has the most outpatient facilities. Generally,
+        as the number of facilities increases, the suicide rates decreases."),
+      p("The second chart is a clustered bar chart which plots the top 10 countries
+        with the most facilities of the selected facility type and its suicide rate.
+        For mental hospitals and health units, we see that generally, the suicide rates are higher than
+        the number of facilities. For outpatient facilities, however,
+        we see that sometimes the suicide rate is actually lower than the number of outpatient 
+        facilities. Comparing the three different facility types, we see that health units are the most
+        lacking facility type since the suicide rates are so much higher than the number 
+        of health units, followed by mental hospitals.")
     )
   )
 )
@@ -138,7 +152,18 @@ page_four <- tabPanel(
 
 page_five <- tabPanel(
   "Conclusion",
-  titlePanel("")
+  titlePanel(""),
+  h2("Strengths"),
+  p(),
+  h2("Limitations"),
+  p("For the visualizations in the 'Facilities for Mental Health' and 'Human Resources for
+    Mental Health' tabs, we had to remove missings and NA values from our dataset. As a result,
+    the visualizations don't include every country, so insights gained from
+    these visualizations may not apply to every country. Additionally, since the visualizations
+    plot a line between the maximum suicide rate and maximum number of facilities to be used in the weights,
+    viewers may not see a one to one relationship between the number of facilities and suicide rates.
+    Moreover, for the visualizations that display the weighted and unwieghted resource type, any missing
+    values were replaced with zeros rather than being removed in order to show every country on the visualization.")
 )
 
 # --------- DEFINING UI: PUTTING PAGES TOGETHER ---------- 

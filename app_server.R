@@ -118,8 +118,8 @@ server <- function(input, output) {
     ) +
       geom_point() +
       geom_text(label = viz_data$Country, nudge_x = x_offset, check_overlap = TRUE) +
-      xlab("Number of Facilities") +
-      ylab("Suicide Rates") +
+      xlab("Number of Facilities (per 100k)") +
+      ylab("Suicide Rates (per 100k)") +
       ggtitle("Number of Mental Health Facilities vs Suicide Rates")
     
     # add line segment
@@ -154,23 +154,23 @@ server <- function(input, output) {
     t <- viz_data %>% 
       select(Country, input$facility_type, suicide_rate) %>%
       arrange(desc(!!rlang::sym(input$facility_type))) %>% 
-      rename("Suicide Rate" = "suicide_rate") %>% 
+      rename("Suicide Rate (per 100k)" = "suicide_rate") %>% 
       slice(1:20)
     
     # rename headers
     if(input$facility_type == "mental_hospitals"){
       t <- t %>% 
-        rename("Mental Hospitals" = "mental_hospitals")
+        rename("Mental Hospitals (per 100k)" = "mental_hospitals")
     }
     
     if(input$facility_type == "health_units"){
       t <- t %>% 
-        rename("Health Units" = "health_units")
+        rename("Health Units (per 100k)" = "health_units")
     }
     
     if(input$facility_type == "outpatient_facilities"){
       t <- t %>% 
-        rename("Outpatient Facilities" = "outpatient_facilities")
+        rename("Outpatient Facilities (per 100k)" = "outpatient_facilities")
     }
     
     return(t)
