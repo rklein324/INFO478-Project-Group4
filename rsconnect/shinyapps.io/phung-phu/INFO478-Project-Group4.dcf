@@ -5,10 +5,10 @@ account: phung-phu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4211113
-bundleId: 4666921
+bundleId: 4669933
 url: https://phung-phu.shinyapps.io/INFO478-Project-Group4/
-when: 1622601848.86898
-lastSyncTime: 1622601848.86898
+when: 1622659962.22957
+lastSyncTime: 1622659962.22957
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .RData|LICENSE|README.md|exploratory-analysis

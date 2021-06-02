@@ -137,7 +137,8 @@ server <- function(input, output) {
     t <- viz_data %>% 
       select(Country, input$facility_type, suicide_rate) %>%
       arrange(desc(!!rlang::sym(input$facility_type))) %>% 
-      rename("Suicide Rate" = "suicide_rate")
+      rename("Suicide Rate" = "suicide_rate") %>% 
+      slice(1:20)
     
     if(input$facility_type == "mental_hospitals"){
       t <- t %>% 
@@ -165,7 +166,7 @@ server <- function(input, output) {
     top_10 <- viz_data %>%
       select(Country, "Suicide Rate", input$facility_type) %>% 
       arrange(desc(!!rlang::sym(input$facility_type))) %>%
-      top_n(10)
+      slice(1:10)
     
     df <- gather(top_10, event, total, 'Suicide Rate':input$facility_type)
     
