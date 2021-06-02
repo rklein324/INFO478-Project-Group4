@@ -94,6 +94,7 @@ page_two <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz1"),
+      plotlyOutput("viz1.1"),
       h3("Analysis"),
       h4("Analysis on Mental Hospitals and Suicide Rates"),
       p("Filler"),

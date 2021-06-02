@@ -106,7 +106,7 @@ server <- function(input, output) {
       geom_text(label = viz_data$Country, nudge_x = x_offset, check_overlap = TRUE) +
       xlab("Number of Facilities") +
       ylab("Suicide Rates") +
-      ggtitle("Number of Facilities vs Suicide Rates")
+      ggtitle("Number of Mental Health Facilities vs Suicide Rates")
     
     if(input$facility_type == "mental_hospitals") {
       p <- p + geom_line(data = line_plot_data_mental_hospitals, 
@@ -134,10 +134,53 @@ server <- function(input, output) {
     viz_data <- viz_data %>% 
       drop_na()
     
-    viz_data %>% 
-      select(Country, input$facility_type) %>% 
-      arrange(desc(!!rlang::sym(input$facility_type)))
+    t <- viz_data %>% 
+      select(Country, input$facility_type, suicide_rate) %>%
+      arrange(desc(!!rlang::sym(input$facility_type))) %>% 
+      rename("Suicide Rate" = "suicide_rate")
+    
+    if(input$facility_type == "mental_hospitals"){
+      t <- t %>% 
+        rename("Mental Hospitals" = "mental_hospitals")
+    }
+    
+    if(input$facility_type == "health_units"){
+      t <- t %>% 
+        rename("Health Units" = "health_units")
+    }
+    
+    if(input$facility_type == "outpatient_facilities"){
+      t <- t %>% 
+        rename("Outpatient Facilities" = "outpatient_facilities")
+    }
+    return(t)
   })
+  
+  output$viz1.1 <- renderPlotly({
+    viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$facility_type))
+    viz_data <- viz_data %>% 
+      drop_na() %>% 
+      rename("Suicide Rate" = "suicide_rate")
+    
+    top_10 <- viz_data %>%
+      select(Country, "Suicide Rate", input$facility_type) %>% 
+      arrange(desc(!!rlang::sym(input$facility_type))) %>%
+      top_n(10)
+    
+    df <- gather(top_10, event, total, 'Suicide Rate':input$facility_type)
+    
+    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+      geom_bar(stat = "identity", position = "dodge", colour = "black") +
+      ggtitle("Relationship between Mental Health Facilities and Suicide Rates") +
+      labs(x = "Country", y = "Total") +
+      labs(fill = "Comparsion") +
+      scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
+      theme(axis.text.x = element_text(angle = 45))
+    return(ggplotly(p))
+  })
+  
+  
+  
   
   output$viz2 <- renderPlot({
     viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$human_resources))
@@ -201,12 +244,13 @@ server <- function(input, output) {
     
     df <- gather(top_10, event, total, 'Suicide Rate':input$human_resources)
     
-    p <- plot <- ggplot(df, aes(x = reorder(Country, total), y = total, fill = event)) +
+    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Human Resources and Suicide Rate") +
       labs(x = "Country", y = "Total") +
       labs(fill = "Comparsion") +
-      scale_fill_manual(values = c("#CC79A7", "#56B4E9"))
+      scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
+      theme(axis.text.x = element_text(angle = 45))
     return(ggplotly(p))
   })
   
