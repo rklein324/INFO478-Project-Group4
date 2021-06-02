@@ -103,7 +103,7 @@ server <- function(input, output) {
       mapping = aes_string(x = input$facility_type, y = "suicide_rate")
     ) +
       geom_point() +
-      geom_text(label=viz_data$Country, nudge_x = x_offset, check_overlap = TRUE) +
+      geom_text(label = viz_data$Country, nudge_x = x_offset, check_overlap = TRUE) +
       xlab("Number of Facilities") +
       ylab("Suicide Rates") +
       ggtitle("Number of Facilities vs Suicide Rates")

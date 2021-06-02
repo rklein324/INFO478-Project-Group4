@@ -97,8 +97,10 @@ page_two <- tabPanel(
       h3("Analysis"),
       h4("Analysis on Mental Hospitals and Suicide Rates"),
       p("Filler"),
+      br(),
       h4("Analysis on Health Units and Suicide Rates"),
       p("Filler"),
+      br(),
       h4("Analysis on Outpatient Facilities and Suicide Rates"),
       p("Filler")
     )
@@ -139,7 +141,7 @@ page_five <- tabPanel(
 
 # --------- DEFINING UI: PUTTING PAGES TOGETHER ---------- 
 ui <- navbarPage(
-  "Title",
+  "Mental Health Resources Analysis",
   page_one,
   page_two,
   page_three,
