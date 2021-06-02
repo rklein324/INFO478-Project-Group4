@@ -164,7 +164,7 @@ page_five <- tabPanel(
     these visualizations may not apply to every country. Additionally, since the visualizations
     plot a line between the maximum suicide rate and maximum number of facilities to be used in the weights,
     viewers may not see a one to one relationship between the number of facilities and suicide rates.
-    Moreover, for the visualizations that display the weighted and unwieghted resource type, any missing
+    Moreover, for the visualizations in the 'Facilities vs Human Resources' tab, any missing
     values were replaced with zeros rather than being removed in order to show every country on the visualization.")
 )
 
