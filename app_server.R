@@ -377,13 +377,13 @@ server <- function(input, output) {
     if(input$total_selection == "total_hr") {
       p <- p + geom_line(data = line_hr, 
                          aes(x = total_hr, y = suicide_rate),
-                         color = "blue")
+                         color = "purple")
     }
     
     if(input$total_selection == "total_hr_wt") {
       p <- p + geom_line(data = line_hr_wt, 
                          aes(x = total_hr_wt, y = suicide_rate),
-                         color = "blue")
+                         color = "purple")
     }
     
     return(p)

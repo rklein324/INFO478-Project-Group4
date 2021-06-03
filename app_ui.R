@@ -132,7 +132,37 @@ page_three <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz2"),
-      plotlyOutput("viz2.1")
+      plotlyOutput("viz2.1"),
+      br(),
+      h3("Analysis"),
+      p("There are three types of mental health human resources to choose from: 
+        psychiatrists, nurses, and psychologists. After selecting a human resource type, 
+        it will display a table of the top 20 countries with the most mental health human 
+        resource of the selected human resource type, the number of available human resources, 
+        and suicide rates. For example, by selecting psychiatrists, a table will show the top 
+        20 countries with the most mental health psychiatrists, the number of available psychiatrists, 
+        and the suicide rate in those countries."),
+      p("The first chart is a scatter plot showing the number of the selected mental health human 
+        resources and suicide rates in each country. Two data points are selected for each human 
+        resource type to form a line to observe the relationship between mental health human 
+        resources and the suicide rate in a given country. One data point is the country 
+        with the highest suicide rate, and the other is the country with the highest number 
+        of the selected human resource type. By doing so, we can see that the two variables 
+        are not a one-to-one relationship. Instead, the trend is that as the number of human 
+        resources increases, the suicide rate decreases, and vice versa. Norway, for example, 
+        has the highest number of mental health psychiatrists and a relatively low suicide rate. 
+        On the other hand, Guyana has the highest suicide rate but rather few mental 
+        health psychiatrists and psychologists."),
+      p("The second chart is a cluster bar chart that includes the top 10 countries with the 
+        most human resources of the selected type and suicide rates. In the chart, we can see 
+        that the trend of having more mental health human resources leading to a lower suicide 
+        rate is not apparent in psychiatrists, but it is evident in nurses and psychologists. 
+        One reason may be that there are more nurses and psychologists available because their 
+        profession includes a broader range."),
+      p("Comparing the three types of human resources and suicide rates, we discovered that 
+        having more mental health nurses has a more significant impact in reducing suicide rates. 
+        Understanding which human resources are most effective in reducing suicide rates is very 
+        helpful to guide countries in how to best allocate their resources.")
     )
   )
 )
@@ -196,8 +226,6 @@ page_four <- tabPanel(
 page_five <- tabPanel(
   "Conclusion",
   titlePanel(""),
-  h2("Strengths"),
-  p(),
   h2("Limitations"),
   p("For the visualizations in the 'Facilities for Mental Health' and 'Human Resources for
     Mental Health' tabs, we had to remove missings and NA values from our dataset. As a result,
@@ -208,7 +236,19 @@ page_five <- tabPanel(
     This line also may not be the best one to accuratly demonstrate the relationship
     between the number of resources and the maximum suicide rate.
     Moreover, for the visualizations in the 'Facilities vs Human Resources' tab, any missing
-    values were replaced with zeros rather than being removed in order to show every country on the visualization.")
+    values were replaced with zeros rather than being removed in order to show every country on the visualization."),
+  h2("Strengths"),
+  p("Although the data sets have some limitations where some countries have missing data, 
+    we were still able to use them and discover some critical findings. Our goal is to study 
+    the global suicide rate to investigate the best mental health care strategy to be implemented 
+    at the policy level. Therefore, effective observation of the relationship between mental health 
+    facilities and human resources and the suicide rate in a specific country can significantly 
+    assist the allocation of resources to reduce suicide rates. From the visualizations, we can see 
+    that with the increase of suicide rate, mental health resources decrease, and vice versa. Mental 
+    health facilities and human resources have a significant impact on the suicide rate of a country. 
+    This finding can be an important consideration for public policy decision-making around mental health. 
+    If public policymakers take into account key findings, they can significantly reduce the suicide rate 
+    and improve the country's mental health.")
 )
 
 # --------- DEFINING UI: PUTTING PAGES TOGETHER ---------- 
