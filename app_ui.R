@@ -35,6 +35,9 @@ page_one <- tabPanel(
   "Introduction",
   titlePanel("Introduction"),
   mainPanel(
+    h2(strong("Research Question")),
+    p("What is more effective at preventing suicide: increasing
+      mental health facilities or human resources?"),
     h2(strong("Objective")),
     p("The main objective of this report is to look at suicide
       rates globally to investigate the best mental health care
@@ -121,7 +124,32 @@ page_four <- tabPanel(
 
 page_five <- tabPanel(
   "Conclusion",
-  titlePanel("")
+  titlePanel("Conclusion"),
+  mainPanel(
+    h2(strong("Temporary Thoughts for the Conclusion")),
+    p("Talk about the project strengths and limitations"),
+    p("One thing to think about is how having a higher frequency of
+      facilities taht offer mental health care comes with the
+      implication that they will be better suited to treat mental
+      health on a larger scale and in trun reduce suicide rates more
+      effectively. Of course, one must also think that opening more
+      facilities could cost more than hiring more staff at existing
+      spaces."),
+    p("Should probably mention something about underreporting or
+      differences in how suicide is reported from some countries.
+      Also suggest need to investigate the macroeconomic indicators
+      for the mental welfare of a country and link to the relavent
+      paper. Point to other factors that help show how complicated
+      suicide is for researchers. Other questions arise such as
+      urgency-driven curative medical solutions vs. long-term public
+      health initiatives."),
+    p("Our general analysis relies on the assumption that having an
+      abundance of these types of mental health resources have an
+      impact at reducing suicide rates at all. The data from our
+      exploratory analysis does seem to indicate that there is a
+      relationship between the two that should be investigated, but
+      we cannot confirma causal relationship.")
+  )
 )
 
 
