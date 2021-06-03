@@ -135,8 +135,8 @@ page_three <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz2"),
-      plotlyOutput("viz2.1"),
       br(),
+      plotlyOutput("viz2.1"),
       h3("Analysis"),
       p("There are three types of mental health human resources to choose from: 
         psychiatrists, nurses, and psychologists. After selecting a human resource type, 
