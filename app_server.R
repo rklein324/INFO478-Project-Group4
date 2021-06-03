@@ -210,12 +210,14 @@ server <- function(input, output) {
       slice(1:10)
     
     df <- gather(top_10, event, total, 'Suicide Rate':input$facility_type)
+    df_order <- df %>%
+      arrange(input$human_resources, total)
     
     # create bar chart
-    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+    p <- plot <- ggplot(df, aes(x = reorder(Country, df_order$total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Mental Health Facilities and Suicide Rates") +
-      labs(x = "Country", y = "Total") +
+      labs(x = "Country", y = "Total (per 100k)") +
       labs(fill = "Comparsion") +
       scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
       theme(axis.text.x = element_text(angle = 45))
@@ -239,7 +241,7 @@ server <- function(input, output) {
     ) +
       geom_point() +
       geom_text(label=viz_data$Country, nudge_y = 1, check_overlap = TRUE) +
-      xlab(x_axis) +
+      xlab(paste("Number of", x_axis,"(per 100k)")) +
       ylab("Suicide Rate (per 100k)") +
       ggtitle("Number of Human Resources vs Suicide Rates")
 
@@ -279,12 +281,14 @@ server <- function(input, output) {
       slice(1:10)
     
     df <- gather(top_10, event, total, 'Suicide Rate (per 100k)':input$human_resources)
+    df_order <- df %>%
+      arrange(input$human_resources, total)
     
     # create bar chart
-    p <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+    p <- ggplot(df, aes(x = reorder(Country, df_order$total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Human Resources and Suicide Rate") +
-      labs(x = "Country", y = "Total") +
+      labs(x = "Country", y = "Total (per 100k)") +
       labs(fill = "Comparsion") +
       scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
       theme(axis.text.x = element_text(angle = 45))
@@ -330,8 +334,8 @@ server <- function(input, output) {
     ) +
       geom_point() +
       geom_text(label=plot_data_totals$Country, nudge_y = 1, check_overlap = TRUE) +
-      xlab("Number of Resources") +
-      ylab("Suicide Rates") +
+      xlab("Number of Resources (per 100k)") +
+      ylab("Suicide Rates (per 100k)") +
       ggtitle("Number of Resources vs Suicide Rates")
     
     # add line segment
@@ -350,13 +354,13 @@ server <- function(input, output) {
     if(input$total_selection == "total_hr") {
       p <- p + geom_line(data = line_hr, 
                          aes(x = total_hr, y = suicide_rate),
-                         color = "purple")
+                         color = "blue")
     }
     
     if(input$total_selection == "total_hr_wt") {
       p <- p + geom_line(data = line_hr_wt, 
                          aes(x = total_hr_wt, y = suicide_rate),
-                         color = "purple")
+                         color = "blue")
     }
     
     return(p)
@@ -376,12 +380,15 @@ server <- function(input, output) {
       slice(1:10)
     
     df <- gather(top_10, event, total, 'Suicide Rate':input$total_selection)
+    df$event <- factor(df$event, levels = c(input$total_selection, "Suicide Rate"))
+    df_order <- df %>%
+      arrange(input$total_selection, total)
     
     # create bar chart
-    p <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+    p <- ggplot(df, aes(x = reorder(Country, df_order$total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Total Resources and Suicide Rate") +
-      labs(x = "Country", y = "Resources") +
+      labs(x = "Country", y = "Resources/Suicide Rates (per 100k)") +
       labs(fill = "Comparsion") +
       scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
       theme(axis.text.x = element_text(angle = 45))
@@ -403,24 +410,27 @@ server <- function(input, output) {
       slice(1:20)
     
     # rename headers
+    t <- t %>% 
+      rename("Suicide Rate (per 100k)" = "Suicide Rate")
+    
     if(input$total_selection == "total_facilities"){
       t <- t %>% 
-        rename("Facilities" = "total_facilities")
+        rename("Facilities (per 100k)" = "total_facilities")
     }
     
     if(input$total_selection == "total_facilities_wt"){
       t <- t %>% 
-        rename("Facilities * Weight" = "total_facilities_wt")
+        rename("Facilities * Weight (per 100k)" = "total_facilities_wt")
     }
     
     if(input$total_selection == "total_hr"){
       t <- t %>% 
-        rename("Human Resources" = "total_hr")
+        rename("Human Resources (per 100k)" = "total_hr")
     }
     
     if(input$total_selection == "total_hr_wt"){
       t <- t %>% 
-        rename("Human Resources * Weight" = "total_hr_wt")
+        rename("Human Resources * Weight (per 100k)" = "total_hr_wt")
     }
     
     return(t)
