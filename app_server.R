@@ -29,8 +29,8 @@ age_standardized_suicide <- age_standardized_suicide %>%
   select(Country, "suicide_rate")
 
 # join data
-plot_data <- inner_join(age_standardized_suicide, facilities)
-plot_data <- inner_join(plot_data, human_resources)
+plot_data <- inner_join(age_standardized_suicide, facilities, by = "Country")
+plot_data <- inner_join(plot_data, human_resources, by = "Country")
 
 # select data for line segments
 line_plot_data_mental_hospitals <- plot_data %>% 
@@ -80,6 +80,8 @@ for (r in resources) {
 resource_weights <- resource_weights %>%
   mutate(weight = (y2 - y1) / (x2 - x1) * -1)
 
+rownames(resource_weights)<-c("Mental Hospitals", "Outpatient Facilities", "Health Units", "Psychiatrists", "Nurses", "Psychologists")
+
 # add aggregated columns for resource type
 plot_data_totals <- plot_data %>%
   # drop_na() %>% # use this to drop rows with any NA values
@@ -125,9 +127,10 @@ for (r in resources_t) {
   resource_t_weights[r, "y2"] <- max_r$suicide_rate
   resource_t_weights[r, "x2"] <- max_r[r]
 }
-
 resource_t_weights <- resource_t_weights %>%
   mutate(weight = (y2 - y1) / (x2 - x1) * -1)
+
+rownames(resource_t_weights)<-c("Facilites","Facilites (weighted)","Human Resources","Human Resources (weighted)")
 
 # ------- INTERACTIVE VISUALIZAION PLOTS ------- 
 server <- function(input, output) {
@@ -479,4 +482,12 @@ server <- function(input, output) {
     
     return(t)
   })
+  
+  output$weightTable1 <- renderTable({
+    return(resource_weights)
+  }, rownames = TRUE)
+  
+  output$weightTable2 <- renderTable({
+    return(resource_t_weights)
+  }, rownames = TRUE)
 }

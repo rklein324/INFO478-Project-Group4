@@ -147,7 +147,48 @@ page_four <- tabPanel(
     ),
     mainPanel(
       plotOutput("viz3"),
-      plotlyOutput("viz3.1")
+      br(),
+      plotlyOutput("viz3.1"),
+      h3("Weights"),
+      p("Weights are based on the slope of the lines used in the visualizations
+         in the previous two tabs. The line connects the 2 points with the
+         highest suicide rate and the highest number of resources. The
+         coordinates of the points and the resulting weights are shown below."),
+      tableOutput("weightTable1"),
+      p("In order to have enough data points to work with, any NA values for the
+        visualization on this tab are replaced with 0. In order to get the
+        weighted totals, each value for number of resources is multiplied by its
+        corresponding weight."),
+      h3("Analysis"),
+      p("The first chart, the scatter plot, shows the relationship between the
+        number of either facilities or human resources (in the mental health
+        field) and the suicide rate in that country in 2016. Similar to
+        comparing individual resources, this chart shows that as the number of
+        resources increase the MAXIMUM suicide rate decreases. This is
+        demonstrated by the segment line and the axes making a right triangle.
+        While some countries have few resources AND low suicide rates, no
+        countries have many resources and high suicide rates. "),
+      p("This is also shown in the grouped bar chart showing the countries with
+        the top 10 highest number of mental health resources. While suicide
+        rates do not linearly increase as resources decrease, there is a trend
+        showing that suicide rates tend to be closer to or higher than the
+        number of resources as the number of resources decreases."),
+      p("This demonstrates that while investing in mental health facilities and
+        human resources is important in preventing suicide, it is not the only
+        factor, and these other factors are also important at reducing the rates
+        of suicide."),
+      p("When it comes to deciding whether to more heavily invest in mental
+        health facilities or human resources, you can compare the slope of the
+        connecting lines showing the (general) maximum suicide rate. (Again, the
+        steeper the slope, the more theoretically effective the resource is in
+        preventing suicide.) These weights are shown below."),
+      tableOutput("weightTable2"),
+      p("While the slope for facilities when unweighted is steeper than human
+        resources (both unweighted and weighted), the slope for weighted
+        facilities is slightly shallower than for weighted human resources. This
+        implies that if you have to choose between investing in mental health
+        facilities or human resources, it is best to add more personnel, rather
+        than spread out the personnel you already have.")
     )
   )
 )
@@ -164,6 +205,8 @@ page_five <- tabPanel(
     these visualizations may not apply to every country. Additionally, since the visualizations
     plot a line between the maximum suicide rate and maximum number of facilities to be used in the weights,
     viewers may not see a one to one relationship between the number of facilities and suicide rates.
+    This line also may not be the best one to accuratly demonstrate the relationship
+    between the number of resources and the maximum suicide rate.
     Moreover, for the visualizations in the 'Facilities vs Human Resources' tab, any missing
     values were replaced with zeros rather than being removed in order to show every country on the visualization.")
 )
