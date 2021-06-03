@@ -277,10 +277,10 @@ server <- function(input, output) {
     top_10 <- viz_data %>%
       select(Country, "suicide_rate", input$human_resources) %>% 
       arrange(desc(!!rlang::sym(input$human_resources))) %>%
-      rename("Suicide Rate (per 100k)" = "suicide_rate") %>% 
+      rename("Suicide Rate" = "suicide_rate") %>% 
       slice(1:10)
     
-    df <- gather(top_10, event, total, 'Suicide Rate (per 100k)':input$human_resources)
+    df <- gather(top_10, event, total, 'Suicide Rate':input$human_resources)
     df_order <- df %>%
       arrange(input$human_resources, total)
     
@@ -371,24 +371,48 @@ server <- function(input, output) {
     viz_data <- subset(plot_data_totals, select = c("Country", "suicide_rate", input$total_selection))
     viz_data <- viz_data %>% 
       drop_na() %>% 
-      rename("Suicide Rate" = "suicide_rate")
+      rename("Suicide Rate (per 100k)" = "suicide_rate")
     
     # select data
     top_10 <- viz_data %>%
-      select(Country, "Suicide Rate", input$total_selection) %>% 
+      select(Country, "Suicide Rate (per 100k)", input$total_selection) %>% 
       arrange(desc(!!rlang::sym(input$total_selection))) %>%
       slice(1:10)
     
-    df <- gather(top_10, event, total, 'Suicide Rate':input$total_selection)
-    df$event <- factor(df$event, levels = c(input$total_selection, "Suicide Rate"))
+    df <- gather(top_10, event, total, "Suicide Rate (per 100k)":input$total_selection)
     df_order <- df %>%
       arrange(input$total_selection, total)
+    
+    # create legend label
+    if(input$total_selection == "total_facilities"){
+      df <- df %>%
+        mutate(event = replace(event, event != "Suicide Rate (per 100k)", "Facilities (per 100k)"))
+      df$event <- factor(df$event, levels = c("Facilities (per 100k)", "Suicide Rate (per 100k)"))
+    }
+    
+    if(input$total_selection == "total_facilities_wt"){
+      df <- df %>%
+        mutate(event = replace(event, event != "Suicide Rate (per 100k)", "Facilities * Weight (per 100k)"))
+      df$event <- factor(df$event, levels = c("Facilities * Weight (per 100k)", "Suicide Rate (per 100k)"))
+    }
+    
+    if(input$total_selection == "total_hr"){
+      df <- df %>%
+        mutate(event = replace(event, event != "Suicide Rate (per 100k)", "Human Resources (per 100k)"))
+      df$event <- factor(df$event, levels = c("Human Resources (per 100k)", "Suicide Rate (per 100k)"))
+    }
+    
+    if(input$total_selection == "total_hr_wt"){
+      df <- df %>%
+        mutate(event = replace(event, event != "Suicide Rate (per 100k)", "Human Resources * Weight (per 100k)"))
+      df$event <- factor(df$event, levels = c("Human Resources * Weight (per 100k)", "Suicide Rate (per 100k)"))
+    }
     
     # create bar chart
     p <- ggplot(df, aes(x = reorder(Country, df_order$total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Total Resources and Suicide Rate") +
-      labs(x = "Country", y = "Resources/Suicide Rates (per 100k)") +
+      labs(x = "Country", y = "Resources/Suicide Rates") +
       labs(fill = "Comparsion") +
       scale_fill_manual(values = c("#CC79A7", "#56B4E9")) +
       theme(axis.text.x = element_text(angle = 45))
