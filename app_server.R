@@ -109,7 +109,27 @@ line_hr_wt <- plot_data_totals %>%
   select(Country, suicide_rate, total_hr_wt) %>% 
   filter(Country == "Guyana" | Country == "Argentina")
 
-# ------- INTERACTIVE VISUALIZAION PLOT ------- 
+# calculate weight for each resource total
+resources_t <- c("total_facilities", "total_facilities_wt", "total_hr", "total_hr_wt")
+
+resource_t_weights <- data.frame(x1=double(), y1=double(), x2=double(), y2=double())
+
+for (r in resources_t) {
+  max_suicide <- plot_data_totals %>%
+    filter(!is.na(plot_data_totals[r])) %>%
+    filter(suicide_rate == max(suicide_rate, na.rm = TRUE))
+  max_r <- plot_data_totals %>%
+    filter(plot_data_totals[r] == max(plot_data_totals[r], na.rm = TRUE))
+  resource_t_weights[r, "y1"] <- max_suicide$suicide_rate
+  resource_t_weights[r, "x1"] <- max_suicide[r]
+  resource_t_weights[r, "y2"] <- max_r$suicide_rate
+  resource_t_weights[r, "x2"] <- max_r[r]
+}
+
+resource_t_weights <- resource_t_weights %>%
+  mutate(weight = (y2 - y1) / (x2 - x1) * -1)
+
+# ------- INTERACTIVE VISUALIZAION PLOTS ------- 
 server <- function(input, output) {
   output$viz1 <- renderPlot({
     # modify x offset
