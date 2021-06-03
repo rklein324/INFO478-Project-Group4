@@ -240,7 +240,7 @@ server <- function(input, output) {
       geom_point() +
       geom_text(label=viz_data$Country, nudge_y = 1, check_overlap = TRUE) +
       xlab(x_axis) +
-      ylab("Suicide Rates") +
+      ylab("Suicide Rate (per 100k)") +
       ggtitle("Number of Human Resources vs Suicide Rates")
 
     # add line segment
@@ -269,19 +269,19 @@ server <- function(input, output) {
     # drop NA values for resource selection
     viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$human_resources))
     viz_data <- viz_data %>% 
-      drop_na() %>% 
-      rename("Suicide Rate" = "suicide_rate")
+      drop_na()
     
     # select data
     top_10 <- viz_data %>%
-      select(Country, "Suicide Rate", input$human_resources) %>% 
+      select(Country, "suicide_rate", input$human_resources) %>% 
       arrange(desc(!!rlang::sym(input$human_resources))) %>%
+      rename("Suicide Rate (per 100k)" = "suicide_rate") %>% 
       slice(1:10)
     
-    df <- gather(top_10, event, total, 'Suicide Rate':input$human_resources)
+    df <- gather(top_10, event, total, 'Suicide Rate (per 100k)':input$human_resources)
     
     # create bar chart
-    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+    p <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Human Resources and Suicide Rate") +
       labs(x = "Country", y = "Total") +
@@ -296,14 +296,31 @@ server <- function(input, output) {
     # drop NA values for resource selection
     viz_data <- subset(plot_data, select = c("Country", "suicide_rate", input$human_resources))
     viz_data <- viz_data %>% 
-      drop_na() %>% 
-      rename("Suicide Rate" = "suicide_rate")
+      drop_na()
     
   # select data
-    viz_data %>% 
-      select(Country, input$human_resources, "Suicide Rate") %>% 
-      arrange(desc(!!rlang::sym(input$human_resources))) %>% 
+    t <- viz_data %>% 
+      select(Country, input$human_resources, "suicide_rate") %>% 
+      arrange(desc(!!rlang::sym(input$human_resources))) %>%
+      rename("Suicide Rate (per 100k)" = "suicide_rate") %>%
       slice(1:20)
+    
+    if(input$human_resources == "Psychiatrists"){
+      t <- t %>% 
+        rename("Psychiatrists (per 100k)" = "Psychiatrists")
+    }
+    
+    if(input$human_resources == "Nurses"){
+      t <- t %>% 
+        rename("Nurses (per 100k)" = "Nurses")
+    }
+    
+    if(input$human_resources == "Psychologists"){
+      t <- t %>% 
+        rename("Psychologists (per 100k)" = "Psychologists")
+    }
+    
+    return(t)
   })
   
   output$viz3 <- renderPlot({
@@ -333,13 +350,13 @@ server <- function(input, output) {
     if(input$total_selection == "total_hr") {
       p <- p + geom_line(data = line_hr, 
                          aes(x = total_hr, y = suicide_rate),
-                         color = "blue")
+                         color = "purple")
     }
     
     if(input$total_selection == "total_hr_wt") {
       p <- p + geom_line(data = line_hr_wt, 
                          aes(x = total_hr_wt, y = suicide_rate),
-                         color = "blue")
+                         color = "purple")
     }
     
     return(p)
@@ -361,7 +378,7 @@ server <- function(input, output) {
     df <- gather(top_10, event, total, 'Suicide Rate':input$total_selection)
     
     # create bar chart
-    p <- plot <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
+    p <- ggplot(df, aes(x = reorder(Country, -total), y = total, fill = event)) +
       geom_bar(stat = "identity", position = "dodge", colour = "black") +
       ggtitle("Relationship between Total Resources and Suicide Rate") +
       labs(x = "Country", y = "Resources") +
